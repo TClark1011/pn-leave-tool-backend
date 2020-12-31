@@ -11,7 +11,7 @@ module.exports = {
 	rules: {
 		quotes: ["error", "double"],
 		"no-tabs": ["error", { allowIndentationTabs: true }],
-		indent: ["error", "tab"],
+		indent: ["error", "tab", { SwitchCase: 1 }],
 		"linebreak-style": "off",
 		"no-console": "off",
 		"implicit-arrow-linebreak": "off",
