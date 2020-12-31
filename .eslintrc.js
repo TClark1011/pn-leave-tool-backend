@@ -13,5 +13,7 @@ module.exports = {
 		"no-tabs": ["error", { allowIndentationTabs: true }],
 		indent: ["error", "tab"],
 		"linebreak-style": "off",
+		"no-console": "off",
+		"implicit-arrow-linebreak": "off",
 	},
 };
