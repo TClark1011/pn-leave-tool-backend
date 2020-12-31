@@ -3,7 +3,7 @@ import clientFacingError from "../utils/clientFacingError";
 
 const authErrorCode = 401;
 
-const getAuthMiddleware = (type = "login") => {
+const getAuthMiddleware = (type) => {
 	const authMiddleware = express.Router();
 	authMiddleware.all("/*", async (req, res, next) => {
 		switch (type) {
