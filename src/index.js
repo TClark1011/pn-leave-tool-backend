@@ -1,12 +1,9 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-import dotenv from "dotenv";
 import app from "./app";
 
-dotenv.config();
-
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4001;
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
 });
