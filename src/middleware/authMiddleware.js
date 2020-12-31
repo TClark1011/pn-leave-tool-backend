@@ -15,10 +15,14 @@ const getAuthMiddleware = (type = "login") => {
 				}
 				return clientFacingError(res, {
 					status: authErrorCode,
-					fullMessage: "Bad API key",
+					fullMessage: "Incorrect operator access key key",
 				});
 			default:
-				return null;
+				console.log(`undefined authentication type '${type}' was attempted`);
+				return clientFacingError(res, {
+					status: authErrorCode,
+					fullMessage: "Undefined authentication type",
+				});
 		}
 	});
 	return authMiddleware;
