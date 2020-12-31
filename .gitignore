@@ -1,0 +1,11 @@
+# node modules
+node_modules
+
+# secret env files
+.env
+
+# 'dist' folder with built code
+dist
+
+# misc
+.eslintcache
