@@ -15,7 +15,7 @@ const getAuthMiddleware = (type = "login") => {
 				}
 				return clientFacingError(res, {
 					status: authErrorCode,
-					fullMessage: "Incorrect operator access key key",
+					fullMessage: "Incorrect operator access key",
 				});
 			default:
 				console.log(`undefined authentication type '${type}' was attempted`);
