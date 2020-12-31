@@ -15,5 +15,6 @@ module.exports = {
 		"linebreak-style": "off",
 		"no-console": "off",
 		"implicit-arrow-linebreak": "off",
+		"arrow-body-style": "off",
 	},
 };
