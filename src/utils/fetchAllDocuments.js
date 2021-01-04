@@ -1,5 +1,5 @@
 import getErrorResponse from "./responses/getErrorResponse";
-import clientFacingResult from "./clientFacingResult";
+import getSuccessResponse from "./responses/getSuccessResponse";
 
 /**
  * Generates a route handling function to fetch all documents from a given model
@@ -18,10 +18,10 @@ const fetchDocumentsFromModel = (Model) =>
 	async (req, res) => {
 		try {
 			const result = await Model.find();
-			clientFacingResult(res, { result });
+			console.log("(fetchAllDocuments) result: ", result);
+			res.status(200).json(getSuccessResponse({ "extraData": result }));
 		} catch (err) {
-			const response = getErrorResponse({ "attempting": "fetch documents" });
-			res.status(500).json(response);
+			res.status(500).json(getErrorResponse({ "attempting": "fetch documents" }));
 		}
 	};
 

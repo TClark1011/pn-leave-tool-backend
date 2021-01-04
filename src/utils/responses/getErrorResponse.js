@@ -12,8 +12,7 @@ import getRequestResponse from "./getRequestResponse";
  * If 'attempting' is not provided, this is used instead. If a value for 'attempting' is
  * provided then the returned message will be the 'attempting' value prefixed with the value of
  * 'attemptingPrefix'
- * @param {Error} [options.rawError] The raw error object. If provided it will be entered into its
- * own field in the response, otherwise it will be left out.
+ * @param {Error} [options.extraData] Extra data that will be included in the response.
  * @param {string} [options.redirect] url to redirect user to
  * @returns {object} Error response to return to user
  */
@@ -21,14 +20,15 @@ const getErrorResponse = ({
 	attempting = null,
 	attemptingPrefix = "There was an error while trying to ",
 	fullMessage = "There was an error",
-	rawError = null,
+	extraData = null,
 	redirect = null,
 }) => {
-	return getRequestResponse(
-		fullMessage && !attempting ? fullMessage : attemptingPrefix + attempting,
-		"negative",
-		{ "extraData": rawError, redirect }
-	);
+	return getRequestResponse("negative", {
+		"message":
+			fullMessage && !attempting ? fullMessage : attemptingPrefix + attempting,
+		extraData,
+		redirect,
+	});
 };
 
 export default getErrorResponse;

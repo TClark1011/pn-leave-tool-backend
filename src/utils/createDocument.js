@@ -1,5 +1,5 @@
 import getErrorResponse from "./responses/getErrorResponse";
-import clientFacingResult from "./clientFacingResult";
+import getSuccessResponse from "./responses/getSuccessResponse";
 
 /**
  * Generates a route handling function to create documents of the type of a given Model
@@ -19,15 +19,18 @@ const createDocument = (Model) =>
 		try {
 			const newDocument = await new Model(req.body);
 			await newDocument.save();
-			clientFacingResult(res, {
-				"message": "The document was created successfully",
-				"result": newDocument,
-			});
+			res.status(200).json(
+				getSuccessResponse({
+					"message": "The document was created successfully",
+					"extraData": newDocument,
+				})
+			);
 		} catch (err) {
-			const response = getErrorResponse({
-				"attempting": "create a new document",
-			});
-			res.status(500).json(response);
+			res.status(500).json(
+				getErrorResponse({
+					"attempting": "create a new document",
+				})
+			);
 		}
 	};
 

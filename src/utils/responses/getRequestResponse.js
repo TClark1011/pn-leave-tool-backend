@@ -6,18 +6,18 @@ import serverResponseTones from "../../constants/serverResponseTones";
  * @param {string} tone The tone of the message, must be either "positive" or "negative"
  * @param {object} [options] Optional options
  * @param {string} [options.message] The client facing message
- * @param {any} [options.extraData] Extra data to be included with the response
+ * @param {any} [options.extraData] Extra data to be included with the response. If 'extraData'
+ * is provided and 'message' is not, the response only contain the value of 'extraData'
  * @param {string} [options.redirect] A url to redirect the user to
  * @returns {object} A response to be returned to the client.
  */
-const getRequestResponse = (
-	tone,
-	{ message = null, extraData = null, redirect = null }
-) => {
-	if (!serverResponseTones.includes(message)) {
+const getRequestResponse = (tone, { message, extraData, redirect }) => {
+	if (!serverResponseTones.includes(tone)) {
 		throw Error(
 			"Response tone must be one of the following values: " +
-				JSON.stringify(serverResponseTones)
+				JSON.stringify(serverResponseTones) +
+				". received tone: " +
+				tone
 		);
 	}
 	if (extraData && !message) {

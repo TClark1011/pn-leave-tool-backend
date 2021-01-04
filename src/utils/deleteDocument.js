@@ -1,5 +1,5 @@
 import getErrorResponse from "./responses/getErrorResponse";
-import clientFacingResult from "./clientFacingResult";
+import getSuccessResponse from "./responses/getSuccessResponse";
 
 /**
  * Generates a route handling function to delete documents of the type of a given Model
@@ -21,10 +21,12 @@ const deleteDocument = (Model) =>
 
 			const deleteResult = await Model.findByIdAndDelete(targetId);
 
-			clientFacingResult(res, {
-				"message": "Successfully deleted the document",
-				"result": deleteResult,
-			});
+			res.status(200).json(
+				getSuccessResponse(res, {
+					"message": "Successfully deleted the document",
+					"result": deleteResult,
+				})
+			);
 		} catch (err) {
 			const response = getErrorResponse({
 				"attempting": "delete a document",
