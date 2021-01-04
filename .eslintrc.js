@@ -10,7 +10,7 @@ module.exports = {
 	},
 	"plugins": ["jsdoc", "prefer-arrow"],
 	"rules": {
-		"indent": ["error", "tab", { "VariableDeclarator": 1 }],
+		"indent": ["error", "tab", { "VariableDeclarator": 1, "SwitchCase": 1 }],
 		"quotes": ["error", "double"],
 		"semi": ["error", "always"],
 		"quote-props": ["error", "always"],
