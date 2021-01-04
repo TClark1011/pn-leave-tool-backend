@@ -1,5 +1,5 @@
-import getErrorResponse from "./responses/getErrorResponse";
-import getSuccessResponse from "./responses/getSuccessResponse";
+import getErrorResponse from "../responses/getErrorResponse";
+import getSuccessResponse from "../responses/getSuccessResponse";
 
 /**
  * Generates a route handling function to create documents of the type of a given Model

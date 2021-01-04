@@ -1,9 +1,9 @@
 import express from "express";
 import getAuthMiddleware from "../middleware/authMiddleware";
 import DepotModel from "../models/Depot.model";
-import createDocument from "../utils/createDocument";
-import deleteDocument from "../utils/deleteDocument";
-import fetchAllDocuments from "../utils/fetchAllDocuments";
+import createDocument from "../utils/document_controls/createDocument";
+import deleteDocument from "../utils/document_controls/deleteDocument";
+import fetchAllDocuments from "../utils/document_controls/fetchAllDocuments";
 
 const depotRouter = express.Router();
 
