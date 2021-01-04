@@ -1,4 +1,4 @@
-import clientFacingError from "./clientFacingError";
+import getErrorResponse from "./responses/getErrorResponse";
 import clientFacingResult from "./clientFacingResult";
 
 /**
@@ -24,7 +24,10 @@ const createDocument = (Model) =>
 				"result": newDocument,
 			});
 		} catch (err) {
-			clientFacingError(res, { "attempting": "create a new document" });
+			const response = getErrorResponse({
+				"attempting": "create a new document",
+			});
+			res.status(500).json(response);
 		}
 	};
 

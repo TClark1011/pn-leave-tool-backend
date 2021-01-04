@@ -1,7 +1,7 @@
 import serverResponseTones from "../../constants/serverResponseTones";
 
 /**
- * Generate a server response message
+ * Generate a server response object
  *
  * @param {string} message The client facing message
  * @param {string} tone The tone of the message, must be either "positive" or "negative"
@@ -10,7 +10,7 @@ import serverResponseTones from "../../constants/serverResponseTones";
  * @param {string} [options.redirect] A url to redirect the user to
  * @returns {object} A response to be returned to the client.
  */
-const getServerResponse = (
+const getRequestResponse = (
 	message,
 	tone,
 	{ extraData = null, redirect = null }
@@ -34,4 +34,4 @@ const getServerResponse = (
 	return response;
 };
 
-export default getServerResponse;
+export default getRequestResponse;

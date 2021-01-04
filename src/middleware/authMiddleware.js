@@ -1,6 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import clientFacingError from "../utils/clientFacingError";
+import getErrorResponse from "../utils/responses/getErrorResponse";
+import getServerError from "../utils/responses/getErrorResponse";
 
 const authErrorCode = 401;
 
@@ -22,10 +23,11 @@ const getAuthMiddleware = (type) => {
 				) {
 					return next();
 				}
-				return clientFacingError(res, {
-					"status": authErrorCode,
-					"fullMessage": "Incorrect operator access key",
-				});
+				return res.status(authErrorCode).json(
+					getErrorResponse({
+						"fullMessage": "Incorrect operator access key",
+					})
+				);
 			case "login":
 				if (
 					(await jwt.verify(
@@ -35,16 +37,17 @@ const getAuthMiddleware = (type) => {
 				) {
 					return next();
 				}
-				return clientFacingError(res, {
-					"status": authErrorCode,
-					"fullMessage": "Bad authentication token",
-				});
+				return res.status(authErrorCode).json(
+					getServerError({
+						"fullMessage": "Bad authentication token",
+					})
+				);
 			default:
-				console.log(`undefined authentication type '${type}' was attempted`);
-				return clientFacingError(res, {
-					"status": 500,
-					"fullMessage": "Undefined authentication type",
-				});
+				return res.status(authErrorCode).json(
+					getServerError({
+						"fullMessage": `Undefined authentication type: '${type}`,
+					})
+				);
 		}
 	});
 	return authMiddleware;

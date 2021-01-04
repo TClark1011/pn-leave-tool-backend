@@ -1,4 +1,4 @@
-import clientFacingError from "./clientFacingError";
+import getErrorResponse from "./responses/getErrorResponse";
 import clientFacingResult from "./clientFacingResult";
 
 /**
@@ -20,7 +20,8 @@ const fetchDocumentsFromModel = (Model) =>
 			const result = await Model.find();
 			clientFacingResult(res, { result });
 		} catch (err) {
-			clientFacingError(res, { "attempting": "fetch documents" });
+			const response = getErrorResponse({ "attempting": "fetch documents" });
+			res.status(500).json(response);
 		}
 	};
 

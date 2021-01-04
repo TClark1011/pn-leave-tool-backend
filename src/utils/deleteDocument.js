@@ -1,4 +1,4 @@
-import clientFacingError from "./clientFacingError";
+import getErrorResponse from "./responses/getErrorResponse";
 import clientFacingResult from "./clientFacingResult";
 
 /**
@@ -26,10 +26,10 @@ const deleteDocument = (Model) =>
 				"result": deleteResult,
 			});
 		} catch (err) {
-			console.log("There was an error trying to delete a document: ", err);
-			clientFacingError(res, {
+			const response = getErrorResponse({
 				"attempting": "delete a document",
 			});
+			res.status(500).json(response);
 		}
 	};
 
