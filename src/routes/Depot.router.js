@@ -1,22 +1,22 @@
-import express from "express";
+import { Router } from "express";
 import getAuthMiddleware from "../middleware/authMiddleware";
 import DepotModel from "../models/Depot.model";
 import createDocument from "../utils/document_controls/createDocument";
 import deleteDocument from "../utils/document_controls/deleteDocument";
 import fetchAllDocuments from "../utils/document_controls/fetchAllDocuments";
 
-const depotRouter = express.Router();
+const DepotRouter = Router();
 
 //# Fetch all depots
-depotRouter.get("/", fetchAllDocuments(DepotModel));
+DepotRouter.get("/", fetchAllDocuments(DepotModel));
 
 //# Authentication required to create/delete depots
-depotRouter.use("/", getAuthMiddleware("operator_access_key"));
+DepotRouter.use("/", getAuthMiddleware("operator_access_key"));
 
 //# Create a new depot
-depotRouter.post("/", createDocument(DepotModel));
+DepotRouter.post("/", createDocument(DepotModel));
 
 //# Delete a depot
-depotRouter.delete("/:id", deleteDocument(DepotModel));
+DepotRouter.delete("/:id", deleteDocument(DepotModel));
 
-export default depotRouter;
+export default DepotRouter;
