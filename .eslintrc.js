@@ -1,21 +1,39 @@
 module.exports = {
-	env: {
-		es2021: true,
-		node: true,
+	"env": {
+		"es2021": true,
+		"node": true,
 	},
-	extends: ["airbnb-base"],
-	parserOptions: {
-		ecmaVersion: 12,
-		sourceType: "module",
+	"extends": ["eslint:recommended", "plugin:jsdoc/recommended"],
+	"parserOptions": {
+		"ecmaVersion": 12,
+		"sourceType": "module",
 	},
-	rules: {
-		quotes: ["error", "double"],
-		"no-tabs": ["error", { allowIndentationTabs: true }],
-		indent: ["error", "tab", { SwitchCase: 1 }],
+	"plugins": ["jsdoc", "prefer-arrow"],
+	"rules": {
+		"indent": ["error", "tab", { "VariableDeclarator": 1 }],
+		"quotes": ["error", "double"],
+		"semi": ["error", "always"],
+		"quote-props": ["error", "always"],
+		"prefer-arrow-callback": ["error"],
+		"brace-style": "error",
 		"linebreak-style": "off",
-		"no-console": "off",
-		"implicit-arrow-linebreak": "off",
-		"arrow-body-style": "off",
-		"operator-linebreak": "off",
+		"jsdoc/require-jsdoc": [
+			"error",
+			{
+				"require": {
+					"ArrowFunctionExpression": true,
+					"FunctionDeclaration": true,
+				},
+			},
+		],
+		"jsdoc/no-undefined-types": "off",
+		"prefer-arrow/prefer-arrow-functions": [
+			"error",
+			{
+				"disallowPrototype": true,
+				"singleReturnOnly": false,
+				"classPropertiesAllowed": false,
+			},
+		],
 	},
 };
