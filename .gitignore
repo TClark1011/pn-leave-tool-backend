@@ -4,9 +4,8 @@ node_modules
 # secret env files
 .env
 
-# 'dist' folder with built code
-dist
+# 'build' folder with built code
+build
 
 # misc
 .eslintcache
-.vscode
