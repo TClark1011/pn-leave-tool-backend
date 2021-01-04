@@ -21,10 +21,12 @@ const deleteDocument = (Model) =>
 
 			const deleteResult = await Model.findByIdAndDelete(targetId);
 
+			console.log("(fetchAllDocuments) deleteResult: ", deleteResult);
+
 			res.status(200).json(
-				getSuccessResponse(res, {
+				getSuccessResponse({
 					"message": "Successfully deleted the document",
-					"result": deleteResult,
+					"extraData": deleteResult,
 				})
 			);
 		} catch (err) {
