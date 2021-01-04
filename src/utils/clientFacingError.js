@@ -1,7 +1,8 @@
 /**
  * Send an error response to an HTTP request with a structured format
- * @param  {Express.Response} [res] - The express http response object
- * @param {Object} [options] - Options regarding the response
+ *
+ * @param  {Express.Response} res - The express http response object
+ * @param {object} options - Options regarding the response
  * @param {string} [options.attempting] - What action was being attempted when the
  * error occurred? eg; "delete an item", "fetch documents", etc.
  * @param {string} [options.attemptingPrefix="There was an error while trying to "] - Text
@@ -13,6 +14,7 @@
  * @param {number} [options.status=500] - The http status code to be used in the response
  * @param {Error} [options.rawError] - The raw error object. If provided it will be entered into its
  * own field in the response, otherwise it will be left out.
+ * @returns {Express.ResponseDispatch} Sends the response
  */
 export default (
 	res,
@@ -22,10 +24,10 @@ export default (
 		fullMessage = "There was an error",
 		status = 500,
 		rawError,
-	},
+	}
 ) => {
 	const response = {
-		message:
+		"message":
 			fullMessage && !attempting ? fullMessage : attemptingPrefix + attempting,
 	};
 	if (rawError) {

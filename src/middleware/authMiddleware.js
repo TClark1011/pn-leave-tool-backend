@@ -4,6 +4,12 @@ import clientFacingError from "../utils/clientFacingError";
 
 const authErrorCode = 401;
 
+/**
+ * Generate an authentication middleware route of a specified type
+ *
+ * @param {string} type The type of authentication to use
+ * @returns {Express.Route} A middleware route that will authenticate requests
+ */
 const getAuthMiddleware = (type) => {
 	const authMiddleware = express.Router();
 	authMiddleware.all("/*", async (req, res, next) => {
@@ -17,27 +23,27 @@ const getAuthMiddleware = (type) => {
 					return next();
 				}
 				return clientFacingError(res, {
-					status: authErrorCode,
-					fullMessage: "Incorrect operator access key",
+					"status": authErrorCode,
+					"fullMessage": "Incorrect operator access key",
 				});
 			case "login":
 				if (
 					(await jwt.verify(
 						req.header.authorisation,
-						process.env.JWT_SECRET,
+						process.env.JWT_SECRET
 					)) === employeeNumber
 				) {
 					return next();
 				}
 				return clientFacingError(res, {
-					status: authErrorCode,
-					fullMessage: "Bad authentication token",
+					"status": authErrorCode,
+					"fullMessage": "Bad authentication token",
 				});
 			default:
 				console.log(`undefined authentication type '${type}' was attempted`);
 				return clientFacingError(res, {
-					status: 500,
-					fullMessage: "Undefined authentication type",
+					"status": 500,
+					"fullMessage": "Undefined authentication type",
 				});
 		}
 	});
