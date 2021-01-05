@@ -31,6 +31,7 @@
 		"express": "^4.17.1",
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.11.9",
+		"nodemailer": "^6.4.17",
 		"regenerator-runtime": "^0.13.7",
 		"yup": "^0.32.8"
 	}
