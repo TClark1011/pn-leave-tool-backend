@@ -1,6 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
 import mongooseConnect from "../utils/mongooseConnect";
-import phoneRegex from "../validation/regex/phoneRegex";
 import emailRegex from "../validation/regex/emailRegex";
 
 mongooseConnect(mongoose, "User");
@@ -27,17 +26,6 @@ const userSchema = new Schema({
 			"message": "invalid email address",
 		},
 	},
-	"phone": {
-		"type": String,
-		"required": false,
-		"validate": {
-			"validator": function () {
-				return phoneRegex.test(this.phone);
-			},
-			"message": "phone number invalid",
-		},
-	},
-	//phone field is not currently in use
 	"date_created": { "type": Date, "default": Date.now() },
 	"verified": { "type": Boolean, "default": false },
 });
