@@ -1,9 +1,12 @@
+import nodemailer from "nodemailer";
+
 /**
  * @param root0
  * @param root0.employee_number
  * @param root0.email
+ * @param template
  */
-const sendEmail = async ({ employee_number, email, ...user }) => {
+const sendEmail = () => {
 	const transporter = nodemailer.createTransport({
 		"service": "gmail",
 		"auth": {
@@ -12,27 +15,10 @@ const sendEmail = async ({ employee_number, email, ...user }) => {
 		},
 	});
 
-	const token = jwt.sign(employee_number, process.env.JWT_SECRET);
-
-	const msgFields = {
-		...user,
-		"link": `http://${process.env.BACKEND_URL}/api/users/verify/${token}`,
-	};
-
-	var htmlStream = fs.createReadStream("backend/html/verificationEmail.html");
-
-	for (let i = 0; i < Object.keys(msgFields).length; i++) {
-		const regex = new RegExp("{{" + Object.keys(msgFields)[i] + "}}", "g");
-		htmlStream = htmlStream.pipe(
-			streamReplace(regex, Object.values(msgFields)[i])
-		);
-	}
-
 	return transporter.sendMail({
 		"from": `"PN Annual Leave" <${process.env.EMAIL_USER}@gmail.com>`,
-		"to": email,
+		"to": "mikhaela82@creationuq.com",
 		"subject": "Account Verification",
-		"html": htmlStream,
 	});
 };
 
