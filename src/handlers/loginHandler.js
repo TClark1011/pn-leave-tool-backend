@@ -5,8 +5,10 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 /**
- * @param req
- * @param res
+ * Handle user login
+ *
+ * @param {Express.Request} req HTTP request
+ * @param {Express.Response} res HTTP response
  */
 const loginHandler = async (req, res) => {
 	try {
