@@ -1,12 +1,15 @@
 import nodemailer from "nodemailer";
+import hbs from "nodemailer-express-handlebars";
 
 /**
  * @param root0
  * @param root0.employee_number
  * @param root0.email
  * @param template
+ * @param to
+ * @param action
  */
-const sendEmail = () => {
+const sendEmail = (to, action) => {
 	const transporter = nodemailer.createTransport({
 		"service": "gmail",
 		"auth": {
@@ -15,10 +18,20 @@ const sendEmail = () => {
 		},
 	});
 
+	transporter.use(
+		"compile",
+		hbs({
+			"viewEngine": {
+				"layoutsDir": "./email/layouts",
+			},
+			"viewPath": "./email/templates",
+		})
+	);
 	return transporter.sendMail({
 		"from": `"PN Annual Leave" <${process.env.EMAIL_USER}@gmail.com>`,
-		"to": "mikhaela82@creationuq.com",
+		to,
 		"subject": "Account Verification",
+		"template": action,
 	});
 };
 
