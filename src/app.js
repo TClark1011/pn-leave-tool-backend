@@ -5,7 +5,7 @@ import UserRouter from "./routes/User.router";
 const app = express();
 app.use(express.json());
 
-app.use("/user", UserRouter);
+app.use("/users", UserRouter);
 app.use("/depots", DepotRouter);
 
 app.all("/*", (req, res) => {

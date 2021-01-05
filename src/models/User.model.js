@@ -42,6 +42,18 @@ const userSchema = new Schema({
 	"verified": { "type": Boolean, "default": false },
 });
 
+/**
+ * Returns a sanitised copy of an instance of 'User'
+ *
+ * @returns {Document<User>} Original instance with  with 'password' and '__v' fields removed
+ */
+userSchema.methods.getSanitised = function () {
+	const copy = JSON.parse(JSON.stringify(this));
+	delete copy.password;
+	delete copy.__v;
+	return copy;
+};
+
 const User = model("User", userSchema);
 
 /**
