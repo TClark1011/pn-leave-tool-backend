@@ -5,11 +5,14 @@ import hbs from "nodemailer-express-handlebars";
  * @param root0
  * @param root0.employee_number
  * @param root0.email
+ * @param template.subject
  * @param template
  * @param to
  * @param action
+ * @param template.template
+ * @param template.context
  */
-const sendEmail = (to, action) => {
+const sendEmail = (to, { subject, template, context }) => {
 	const transporter = nodemailer.createTransport({
 		"service": "gmail",
 		"auth": {
@@ -30,8 +33,9 @@ const sendEmail = (to, action) => {
 	return transporter.sendMail({
 		"from": `"PN Annual Leave" <${process.env.EMAIL_USER}@gmail.com>`,
 		to,
-		"subject": "Account Verification",
-		"template": action,
+		subject,
+		template,
+		context,
 	});
 };
 

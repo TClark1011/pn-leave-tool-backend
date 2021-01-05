@@ -7,7 +7,11 @@ import sendEmail from "../utils/sendEmail";
  * @param {Express.Response} res HTTP response
  */
 const registerHandler = (req, res) => {
-	sendEmail("nalados492@nonicamy.com", "verification")
+	sendEmail("nalados492@nonicamy.com", {
+		"template": "verification",
+		"subject": "Email Verification",
+		"context": req.body,
+	})
 		.then(() => res.status(200).send("email sent"))
 		.catch((err) => {
 			console.log("(fetchAllDocuments) error sending email: ", err);
