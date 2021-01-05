@@ -1,13 +1,15 @@
 import express from "express";
 import DepotRouter from "./routes/Depot.router";
+import UserRouter from "./routes/User.router";
 
 const app = express();
 app.use(express.json());
 
+app.use("/user", UserRouter);
 app.use("/depots", DepotRouter);
 
-app.get("/*", (request, response) => {
-	response.status(200).send("You have reached the server");
+app.all("/*", (req, res) => {
+	res.status(404).send("Bad url");
 });
 
 export default app;
