@@ -10,7 +10,15 @@ module.exports = {
 	},
 	"plugins": ["jsdoc", "prefer-arrow"],
 	"rules": {
-		"indent": ["error", "tab", { "VariableDeclarator": 1, "SwitchCase": 1 }],
+		"indent": [
+			"error",
+			"tab",
+			{
+				"VariableDeclarator": 1,
+				"SwitchCase": 1,
+				"ignoredNodes": ["ConditionalExpression"],
+			},
+		],
 		"quotes": ["error", "double"],
 		"semi": ["error", "always"],
 		"quote-props": ["error", "always"],
@@ -26,6 +34,7 @@ module.exports = {
 				},
 			},
 		],
+		"no-mixed-spaces-and-tabs": "off",
 		"jsdoc/no-undefined-types": "off",
 		"prefer-arrow/prefer-arrow-functions": [
 			"error",
