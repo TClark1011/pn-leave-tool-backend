@@ -1,6 +1,5 @@
 import User from "../models/User.model";
 import getErrorResponse from "../utils/responses/getErrorResponse";
-import loginVal from "../validation/schemas/loginVal";
 import bcrypt from "bcrypt";
 import getSuccessResponse from "../utils/responses/getSuccessResponse";
 import getToken from "../utils/getToken";
@@ -12,16 +11,6 @@ import getToken from "../utils/getToken";
  * @param {Express.Response} res HTTP response
  */
 const loginHandler = async (req, res) => {
-	try {
-		await loginVal.validate(req.body);
-	} catch (err) {
-		res.status(400).json(
-			getErrorResponse({
-				"fullMessage": "Bad request, please reload the page and try again",
-			})
-		);
-	}
-
 	const { employee_number, password } = req.body;
 
 	const foundUser = await User.getFromEmployeeNumber(employee_number);

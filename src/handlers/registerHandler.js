@@ -13,18 +13,6 @@ import getToken from "../utils/getToken";
  * @param {Express.Response} res HTTP response
  */
 const registerHandler = async (req, res) => {
-	try {
-		await registerVal.validate(req.body);
-	} catch (err) {
-		res.status(400).json(
-			getErrorResponse({
-				"message": err.errors,
-			})
-		);
-		console.log("error while validating registration: ", err);
-		return;
-	}
-
 	const { employee_number, password } = req.body;
 	const foundUser = await User.getFromEmployeeNumber(employee_number);
 	if (foundUser) {
