@@ -7,7 +7,7 @@ import User from "../models/User.model";
 import loginVal from "../validation/schemas/loginVal";
 import registerVal from "../validation/schemas/registerVal";
 import updateDocument from "../handlers/document_controls/updateDocument";
-// import getAuthMiddleware from "../middleware/authMiddleware";
+import getAuthMiddleware from "../middleware/authMiddleware";
 
 const UserRouter = Router();
 
@@ -21,7 +21,7 @@ UserRouter.post("/register", registerHandler);
 
 UserRouter.get("/verify/:token", verifyHandler);
 
-// UserRouter.use("/", getAuthMiddleware("login"));
+UserRouter.use("/", getAuthMiddleware("login"));
 
 UserRouter.put("/update", updateDocument(User));
 
