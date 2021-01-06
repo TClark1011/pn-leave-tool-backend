@@ -29,7 +29,7 @@ const getAuthMiddleware = (type) => {
 					})
 				);
 			case "login":
-				if (decodeToken(req.header.authorisation) === employeeNumber) {
+				if (decodeToken(req.headers.authorisation) === employeeNumber) {
 					return next();
 				}
 				return res.status(authErrorCode).json(
