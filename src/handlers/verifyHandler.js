@@ -15,13 +15,11 @@ const verifyHandler = async (req, res) => {
 		if (!foundUser.verified) {
 			foundUser.verified = true;
 			foundUser.save();
-			res.redirect(process.env.FRONTEND_URL + "/login?verified");
-			return;
 		}
-		res.status(400).send("You are already verified");
+		res.redirect(process.env.FRONTEND_URL + "/login?verified");
 		return;
 	}
-	res.status(400).send("invalid token");
+	res.redirect(process.env.FRONTEND_URL + "/login?redir");
 };
 
 export default verifyHandler;
