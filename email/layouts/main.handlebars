@@ -3,8 +3,54 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+	<style>
+
+		* {
+			font-family:"Roboto",sans-serif;
+		}
+		p,span,li,a:not(.button) {
+			font-size:16px;
+		}
+
+		h1 {
+			font-weight:700;
+			font-size:32px;
+		}
+
+		button,
+		.button {
+			padding:16px 24px;
+			line-height:44px;
+			border-radius:4px;
+			background-color:hsl(215, 100%, 50%);
+			color:white !important;
+			text-decoration: none !important;
+			text-transform:uppercase;
+			font-weight:500;
+			text-align:center;
+		}
+		button:hover,
+		.button:hover {
+			background-color:hsl(215, 100%, 59%);
+		}
+
+		.center-contents {
+			display:flex;
+			justify-content: center;
+		}
+		.center-contents.h {
+			width:100%;
+		}
+	</style>
 </head>
 <body>
-	{{{body}}}
+	<div class="center-contents h">
+		<div>
+			{{{body}}}
+		</div>
+	</div>
 </body>
 </html>
