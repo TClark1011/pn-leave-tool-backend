@@ -2,10 +2,11 @@ import User from "../models/User.model";
 import getErrorResponse from "../utils/responses/getErrorResponse";
 import loginVal from "../validation/schemas/loginVal";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import getSuccessResponse from "../utils/responses/getSuccessResponse";
+import getToken from "../utils/getToken";
 
 /**
- * Handle user login
+ * Handle user login.
  *
  * @param {Express.Request} req HTTP request
  * @param {Express.Response} res HTTP response
@@ -47,10 +48,14 @@ const loginHandler = async (req, res) => {
 		return;
 	}
 
-	res.status(200).json({
-		...foundUser.getSanitised(),
-		"token": jwt.sign(foundUser.employee_number, process.env.JWT_SECRET),
-	});
+	res.status(200).json(
+		getSuccessResponse({
+			"extraData": {
+				...foundUser.getSanitised(),
+				"token": getToken(foundUser.employee_number),
+			},
+		})
+	);
 };
 
 export default loginHandler;

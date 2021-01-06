@@ -36,14 +36,12 @@ const sendEmail = (to, { subject, template, context }) => {
 		context.date = format(context.date, "hh:mm - dd/mm/yyyy");
 	}
 
-	console.log("(sendEmail) context: ", context);
-
 	return transporter.sendMail({
 		"from": `"PN Annual Leave" <${process.env.EMAIL_USER}@gmail.com>`,
 		to,
 		subject,
 		template,
-		"context": { ...context, "url": `${process.env.URL}` },
+		"context": { ...context, "url": `${process.env.BACKEND_URL}` },
 	});
 };
 
