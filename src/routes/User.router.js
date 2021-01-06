@@ -23,6 +23,14 @@ UserRouter.get("/verify/:token", verifyHandler);
 
 UserRouter.use("/", getAuthMiddleware("login"));
 
-UserRouter.put("/update", updateDocument(User));
+//# User updates information
+UserRouter.put(
+	"/update",
+	updateDocument(User, {
+		"successMessage": "Your new details have been saved",
+		"errorMessage":
+			"An error occurred while attempting to update your details, please try again later",
+	})
+);
 
 export default UserRouter;
