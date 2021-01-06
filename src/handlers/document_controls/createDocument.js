@@ -26,6 +26,7 @@ const createDocument = (Model) =>
 				})
 			);
 		} catch (err) {
+			console.log("There was an error while creating a document: ", err);
 			res.status(500).json(
 				getErrorResponse({
 					"attempting": "create a new document",

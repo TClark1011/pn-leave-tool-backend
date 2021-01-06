@@ -30,10 +30,12 @@ const deleteDocument = (Model) =>
 				})
 			);
 		} catch (err) {
-			const response = getErrorResponse({
-				"attempting": "delete a document",
-			});
-			res.status(500).json(response);
+			console.log("There was an error while deleting a document: ", err);
+			res.status(500).json(
+				getErrorResponse({
+					"attempting": "delete a document",
+				})
+			);
 		}
 	};
 

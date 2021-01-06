@@ -20,6 +20,7 @@ const fetchDocumentsFromModel = (Model) =>
 			const result = await Model.find();
 			res.status(200).json(getSuccessResponse({ "extraData": result }));
 		} catch (err) {
+			console.log("There was an error while fetching documents: ", err);
 			res.status(500).json(getErrorResponse({ "attempting": "fetch documents" }));
 		}
 	};

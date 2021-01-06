@@ -30,6 +30,7 @@ const updateDocument = (Model, field = "_id") =>
 				})
 			);
 		} catch (err) {
+			console.log("There was an error while updating a document: ", err);
 			res.status(500).json(
 				getErrorResponse({
 					"attempting": "update new document",
