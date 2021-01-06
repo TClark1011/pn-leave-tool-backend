@@ -16,10 +16,9 @@ const defaultOptions = {
  * @param {string} [options.keyField="_id"] The field to use to find the document. Defaults to "_id".
  * @param {string} [options.successMessage="The document was updated successfully"] The message to
  * put in the response "message" field if the update request is successful
- * @param keyField
- * @param successMessage
- * @returns {Function} A function that can be used as an express route handler and will create
- * a new document
+ * @param {string} [options.error="There was an error while attempting to update a document""] The message to
+ * put in the response "message" field if the update request fai;s
+ * @returns {Function} A function that can be used as an express route handler to update a document
  */
 const updateDocument = (Model, options = {}) =>
 	/**
