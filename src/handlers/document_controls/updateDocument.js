@@ -32,11 +32,6 @@ const updateDocument = (Model, options = {}) =>
 			options,
 			defaultOptions
 		);
-		console.log("(updateDocument) options: ", {
-			keyField,
-			successMessage,
-			errorMessage,
-		});
 		const filter = {};
 		filter[keyField] = req.body[keyField];
 		try {
