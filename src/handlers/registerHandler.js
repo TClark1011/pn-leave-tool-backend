@@ -1,5 +1,4 @@
 import sendEmail from "../utils/sendEmail";
-import registerVal from "../validation/schemas/registerVal";
 import getErrorResponse from "../utils/responses/getErrorResponse";
 import getSuccessResponse from "../utils/responses/getSuccessResponse";
 import User from "../models/User.model";
