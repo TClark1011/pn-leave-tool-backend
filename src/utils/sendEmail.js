@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import nodemailer from "nodemailer";
 import hbs from "nodemailer-express-handlebars";
 
@@ -30,12 +31,19 @@ const sendEmail = (to, { subject, template, context }) => {
 			"viewPath": "./email/templates",
 		})
 	);
+
+	if (context.date) {
+		context.date = format(context.date, "hh:mm - dd/mm/yyyy");
+	}
+
+	console.log("(sendEmail) context: ", context);
+
 	return transporter.sendMail({
 		"from": `"PN Annual Leave" <${process.env.EMAIL_USER}@gmail.com>`,
 		to,
 		subject,
 		template,
-		context,
+		"context": { ...context, "url": `${process.env.URL}` },
 	});
 };
 

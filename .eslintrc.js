@@ -36,6 +36,7 @@ module.exports = {
 		],
 		"no-mixed-spaces-and-tabs": "off",
 		"jsdoc/no-undefined-types": "off",
+		"no-useless-escape": "off",
 		"prefer-arrow/prefer-arrow-functions": [
 			"error",
 			{

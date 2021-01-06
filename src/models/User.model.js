@@ -12,7 +12,7 @@ const userSchema = new Schema({
 		"maxlength": [6, enLengthMessage],
 		"minlength": [6, enLengthMessage],
 	},
-	"password": { "type": String, "required": true, "minLength": 6, "maxLength": 24 },
+	"password": { "type": String, "required": true },
 	"name": { "type": String, "required": true },
 	"depot": { "type": mongoose.Schema.Types.ObjectId, "ref": "depot", "required": true },
 	"email": {
