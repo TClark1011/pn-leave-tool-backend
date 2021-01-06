@@ -1,5 +1,5 @@
-import getErrorResponse from "../responses/getErrorResponse";
-import getSuccessResponse from "../responses/getSuccessResponse";
+import getErrorResponse from "../../utils/responses/getErrorResponse";
+import getSuccessResponse from "../../utils/responses/getSuccessResponse";
 
 /**
  * Generates a route handling function to delete documents of the type of a given Model
