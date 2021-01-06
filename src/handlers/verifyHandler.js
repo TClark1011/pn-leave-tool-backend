@@ -1,14 +1,15 @@
-import jwt from "jsonwebtoken";
 import User from "../models/User.model";
-import getSuccessResponse from "../utils/responses/getSuccessResponse";
+import decodeToken from "../utils/decodeToken";
 
 /**
- * @param req
- * @param res
+ * Handle user verifying their email address.
+ *
+ * @param {Express.Request} req HTTP request
+ * @param {Express.Response} res HTTP response
  */
 const verifyHandler = async (req, res) => {
 	const foundUser = await User.getFromEmployeeNumber(
-		jwt.verify(req.params.token, process.env.JWT_SECRET)
+		decodeToken(req.params.token)
 	);
 	if (foundUser) {
 		if (!foundUser.verified) {
