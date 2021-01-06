@@ -1,5 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
+import decodeToken from "../utils/decodeToken";
 import getErrorResponse from "../utils/responses/getErrorResponse";
 import getServerError from "../utils/responses/getErrorResponse";
 
@@ -29,12 +30,7 @@ const getAuthMiddleware = (type) => {
 					})
 				);
 			case "login":
-				if (
-					(await jwt.verify(
-						req.header.authorisation,
-						process.env.JWT_SECRET
-					)) === employeeNumber
-				) {
+				if (decodeToken(req.header.authorisation) === employeeNumber) {
 					return next();
 				}
 				return res.status(authErrorCode).json(
