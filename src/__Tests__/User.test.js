@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import supertest from "supertest";
 import random from "random";
 import getToken from "../utils/getToken";
+import User from "../models/User.model";
 
 let app;
 let api;
@@ -51,7 +52,10 @@ afterEach(async (done) => {
 	done();
 });
 
-afterAll(() => {
+afterAll(async () => {
+	await User.findOneAndDelete({
+		"employee_number": testCredentials.employee_number,
+	});
 	mongoose.connection.close();
 });
 
