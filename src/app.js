@@ -15,3 +15,5 @@ app.all("/*", (req, res) => {
 export default app;
 
 module.exports = app;
+//? Allows use of 'require' to import server code into jest tests.
+//? This is required due to specific jest behaviour
