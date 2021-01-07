@@ -81,8 +81,16 @@ describe("Can register new account and login", async () => {
 		done();
 	});
 });
-
-// it("Does not register with invalid input (only 'employee_number' and 'password' fields)", async (done) => {
-// 	await api.post("/users/register").send(getRandomCredentials()).expect(400);
-// 	done();
-// });
+describe("It annot register without the required fields", () => {
+	const creds = extendRegCredentials(getRandomCredentials());
+	const fields = Object.keys(creds);
+	for (let i = 0; i < fields.length; i++) {
+		const currentField = fields[i];
+		const credsCopy = JSON.parse(JSON.stringify(creds));
+		delete credsCopy[currentField];
+		it(`Cannot register without the '${currentField}' field`, async (done) => {
+			await api.post(`${rootUrl}/register`).send(credsCopy).expect(400);
+			done();
+		});
+	}
+});
