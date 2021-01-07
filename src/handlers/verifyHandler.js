@@ -16,7 +16,7 @@ const verifyHandler = async (req, res) => {
 			foundUser.verified = true;
 			foundUser.save();
 		}
-		res.redirect(process.env.FRONTEND_URL + "/login?verified");
+		res.status(200).redirect(process.env.FRONTEND_URL + "/login?verified");
 		return;
 	}
 	res.redirect(process.env.FRONTEND_URL + "/login?redir");

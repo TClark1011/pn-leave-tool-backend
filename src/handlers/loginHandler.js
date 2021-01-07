@@ -28,7 +28,7 @@ const loginHandler = async (req, res) => {
 		return;
 	} else if (!foundUser.verified) {
 		//# Credentials are correct but user has not completed email verification
-		res.status(401).json(
+		res.status(403).json(
 			getErrorResponse({
 				"fullMessage":
 					"You must verify your email address before you can login. Check your email inbox and follow the instructions in the verification email.",

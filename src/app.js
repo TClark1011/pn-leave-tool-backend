@@ -13,3 +13,5 @@ app.all("/*", (req, res) => {
 });
 
 export default app;
+
+module.exports = app;
