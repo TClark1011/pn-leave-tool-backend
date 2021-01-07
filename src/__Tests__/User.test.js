@@ -3,6 +3,7 @@ import supertest from "supertest";
 import random from "random";
 import getToken from "../utils/getToken";
 import User from "../models/User.model";
+import Depot from "../models/Depot.model";
 
 let app;
 let api;
@@ -24,6 +25,8 @@ const getRandomCredentials = () => ({
 	"password": "pppppp",
 });
 
+let testDepot = {};
+
 /**
  * Takes an object with "employee_number" and "password" fields and adds the extra fields required
  * for user registration
@@ -36,11 +39,21 @@ const extendRegCredentials = (credentials) => ({
 	"confirm_employee_number": credentials.employee_number,
 	"confirm_password": credentials.password,
 	"email": "fake@email.com",
-	"depot": "5fed444a2d9b4d4de4389063",
+	"depot": testDepot._id,
 	"name": `Test User (${random.int(1000, 9999)})`,
 });
 
 let testCredentials = getRandomCredentials();
+
+beforeAll(async (done) => {
+	testDepot = new Depot({
+		"name": `Test Depot (${random.int(1000, 9999)})`,
+		"drivers": random.int(40, 90),
+		"hidden": true,
+	});
+	await testDepot.save();
+	done();
+});
 
 beforeEach(() => {
 	app = require("../app");
@@ -56,7 +69,8 @@ afterAll(async () => {
 	await User.findOneAndDelete({
 		"employee_number": testCredentials.employee_number,
 	});
-	mongoose.connection.close();
+	await Depot.findOneAndDelete({ "_id": testDepot._id });
+	await mongoose.connection.close();
 });
 
 const rootUrl = "/users";
