@@ -75,7 +75,7 @@ afterAll(async () => {
 
 const rootUrl = "/users";
 
-describe("Can register new account and login", async () => {
+describe("Can register new account and login", () => {
 	it("Registers successfully with valid input", async (done) => {
 		await api
 			.post(`${rootUrl}/register`)
@@ -99,7 +99,7 @@ describe("Can register new account and login", async () => {
 		done();
 	});
 });
-describe("It annot register without the required fields", () => {
+describe("It cannot register without the required fields", () => {
 	const creds = extendRegCredentials(getRandomCredentials());
 	const fields = Object.keys(creds);
 	for (let i = 0; i < fields.length; i++) {
