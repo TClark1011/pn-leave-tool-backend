@@ -1,4 +1,7 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
+import mongooseConnect from "../utils/mongooseConnect";
+
+mongooseConnect(mongoose, "Roster Day");
 
 const daySchema = new Schema({
 	"date": { "type": Date, "required": true },
