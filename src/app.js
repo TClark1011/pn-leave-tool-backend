@@ -1,11 +1,13 @@
 import express from "express";
 import DepotRouter from "./routes/Depot.router";
+import LeaveRouter from "./routes/Leave.router";
 import UserRouter from "./routes/User.router";
 
 const app = express();
 app.use(express.json());
 
 app.use("/users", UserRouter);
+app.use("/leave", LeaveRouter);
 app.use("/depots", DepotRouter);
 
 app.all("/*", (req, res) => {
