@@ -1,9 +1,9 @@
-import sendEmail from "../utils/sendEmail";
-import getErrorResponse from "../utils/responses/getErrorResponse";
-import getSuccessResponse from "../utils/responses/getSuccessResponse";
-import User from "../models/User.model";
-import encryptPassword from "../utils/encryptPassword";
-import getToken from "../utils/getToken";
+import sendEmail from "../../utils/sendEmail";
+import getErrorResponse from "../../utils/responses/getErrorResponse";
+import getSuccessResponse from "../../utils/responses/getSuccessResponse";
+import User from "../../models/User.model";
+import encryptPassword from "../../utils/encryptPassword";
+import getToken from "../../utils/getToken";
 
 /**
  * Handle user registration

@@ -1,5 +1,5 @@
-import User from "../models/User.model";
-import decodeToken from "../utils/decodeToken";
+import User from "../../models/User.model";
+import decodeToken from "../../utils/decodeToken";
 
 /**
  * Handle user verifying their email address.

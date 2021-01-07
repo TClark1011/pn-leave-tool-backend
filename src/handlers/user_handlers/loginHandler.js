@@ -1,8 +1,8 @@
-import User from "../models/User.model";
-import getErrorResponse from "../utils/responses/getErrorResponse";
+import User from "../../models/User.model";
+import getErrorResponse from "../../utils/responses/getErrorResponse";
 import bcrypt from "bcrypt";
-import getSuccessResponse from "../utils/responses/getSuccessResponse";
-import getToken from "../utils/getToken";
+import getSuccessResponse from "../../utils/responses/getSuccessResponse";
+import getToken from "../../utils/getToken";
 
 /**
  * Handle user login.
