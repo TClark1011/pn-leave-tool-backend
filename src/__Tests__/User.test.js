@@ -87,6 +87,7 @@ describe("Can register new account and login", () => {
 	});
 
 	it("Successfully verifies email", async (done) => {
+		await new Promise((resolve) => setTimeout(resolve, 1000));
 		await api
 			.get(`${rootUrl}/verify/${getToken(testCredentials.employee_number)}`)
 			.expect(302)
@@ -95,6 +96,7 @@ describe("Can register new account and login", () => {
 	});
 
 	it("Allows login to new account", async (done) => {
+		await new Promise((resolve) => setTimeout(resolve, 1000));
 		await api.post(`${rootUrl}/login`).send(testCredentials).expect(200);
 		done();
 	});
