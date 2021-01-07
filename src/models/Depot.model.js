@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import mongooseConnect from "../utils/mongooseConnect";
 
-mongooseConnect(mongoose, "depot");
+mongooseConnect(mongoose, "Depot");
 
 /**
  * The schema for depot objects
