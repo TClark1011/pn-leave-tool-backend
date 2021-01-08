@@ -1,3 +1,0 @@
-[submodule "src/validation"]
-	path = src/validation
-	url = https://github.com/TClark1011/pn-leave-tool-validation.git
