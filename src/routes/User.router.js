@@ -1,7 +1,7 @@
 import { Router } from "express";
-import loginHandler from "../handlers/loginHandler";
-import registerHandler from "../handlers/registerHandler";
-import verifyHandler from "../handlers/verifyHandler";
+import loginHandler from "../handlers/user_handlers/loginHandler";
+import registerHandler from "../handlers/user_handlers/registerHandler";
+import verifyHandler from "../handlers/user_handlers/verifyHandler";
 import validationMiddleware from "../middleware/validationMiddleware";
 import User from "../models/User.model";
 import loginVal from "../validation/schemas/loginVal";

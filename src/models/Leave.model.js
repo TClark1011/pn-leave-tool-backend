@@ -1,7 +1,7 @@
 import mongoose, { Schema, model } from "mongoose";
-import mongooseConnect from "../utility/mongooseConnect";
+import mongooseConnect from "../utils/mongooseConnect";
 import User from "./User.model";
-import { addDays, subDays } from "date-fns/esm";
+import { addDays, subDays } from "date-fns";
 import {
 	leaveStartMinOffset,
 	leaveDeleteParameters,
@@ -14,15 +14,25 @@ mongooseConnect(mongoose, "leave");
  *
  * @returns {Date} The earliest date that new leave can start
  */
-const getMinDate = () => addDays(new Date(), leaveStartMinOffset);
+const getMinStartDate = () => addDays(new Date(), leaveStartMinOffset);
+
+/**
+ * Get the earliest possible end date that new leave can start
+ *
+ * @returns {Date} The earliest date that new leave can start
+ */
+const getMinEndDate = function () {
+	return addDays(this.dates.start, 1);
+};
 
 /**
  * Checks that provided employee number corresponds to an existing user
  *
  * @returns {boolean} Whether or not the provided employee number corresponds to an existing user
  */
-const checkEmployeeNumber = () =>
-	User.getFromEmployeeNumber(this.user) ? true : false;
+const checkEmployeeNumber = function () {
+	return !!User.getFromEmployeeNumber(this.user);
+};
 
 const statusRangeMsg =
 	"Request status must one of the following values: -1 (denied), 0(pending), 1(approved)";
@@ -30,12 +40,12 @@ const leaveSchema = new Schema({
 	"dates": {
 		"start": {
 			"type": Date,
-			"min": getMinDate,
+			"min": getMinStartDate,
 		},
 		"end": {
 			"type": Date,
 			"required": true,
-			"min": this.start,
+			"min": getMinEndDate,
 		},
 	},
 	"user": {
@@ -58,6 +68,9 @@ const leaveSchema = new Schema({
 	"submitted": { "type": Date, "default": Date.now() },
 });
 
+/**
+ * Delete old leave items whenever leave is fetched
+ */
 leaveSchema.pre("find", async () => {
 	console.log("Deleting old leave request items...");
 	await Leave.deleteMany({
