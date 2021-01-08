@@ -9,7 +9,7 @@
 		"test": "jest",
 		"test:dev": "jest --watch",
 		"build": "babel src -d build",
-		"heroku-prebuild": "git pull --recurse-submodules"
+		"heroku-prebuild": "git submodule add https://TClark1011:fRED1998@github.com/TClark1011/pn-leave-tool-validation.git src/validation"
 	},
 	"keywords": [],
 	"author": "",
