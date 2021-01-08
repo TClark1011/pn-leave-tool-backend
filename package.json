@@ -8,7 +8,8 @@
 		"start:dev": "nodemon --exec babel-node src/index.js",
 		"test": "jest",
 		"test:dev": "jest --watch",
-		"build": "babel src -d build"
+		"build": "babel src -d build",
+		"heroku-prebuild": "git pull --recurse-submodules"
 	},
 	"keywords": [],
 	"author": "",
