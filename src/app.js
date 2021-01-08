@@ -2,8 +2,10 @@ import express from "express";
 import DepotRouter from "./routes/Depot.router";
 import LeaveRouter from "./routes/Leave.router";
 import UserRouter from "./routes/User.router";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.use("/users", UserRouter);
