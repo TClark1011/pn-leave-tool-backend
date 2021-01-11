@@ -12,7 +12,7 @@ import getError from "../../utils/getError";
  * @param {Express.Response} res HTTP response
  * @param next
  */
-const loginHandler = async (req, res, next) => {
+const loginHandler = async (req, res) => {
 	console.log("(loginHandler) Received request to login");
 	const { employee_number, password } = req.body;
 
@@ -23,12 +23,7 @@ const loginHandler = async (req, res, next) => {
 
 	if (!userIsAuthenticated) {
 		//# If no user object was found (incorrect employee number) or password was incorrect
-		res.status(401).json(
-			getErrorResponse({
-				"fullMessage": "Incorrect Employee Number or Password",
-			})
-		);
-		return;
+		throw getError("Incorrect Employee Number or Password", 401);
 	} else if (!foundUser.verified) {
 		//# Credentials are correct but user has not completed email verification
 		throw getError(
