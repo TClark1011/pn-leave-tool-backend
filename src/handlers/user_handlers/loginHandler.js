@@ -1,5 +1,4 @@
 import User from "../../models/User.model";
-import getErrorResponse from "../../utils/responses/getErrorResponse";
 import bcrypt from "bcrypt";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
 import getToken from "../../utils/getToken";
@@ -10,7 +9,6 @@ import getError from "../../utils/getError";
  *
  * @param {Express.Request} req HTTP request
  * @param {Express.Response} res HTTP response
- * @param next
  */
 const loginHandler = async (req, res) => {
 	console.log("(loginHandler) Received request to login");
