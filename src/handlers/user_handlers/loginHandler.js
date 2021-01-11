@@ -3,14 +3,16 @@ import getErrorResponse from "../../utils/responses/getErrorResponse";
 import bcrypt from "bcrypt";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
 import getToken from "../../utils/getToken";
+import getError from "../../utils/getError";
 
 /**
  * Handle user login.
  *
  * @param {Express.Request} req HTTP request
  * @param {Express.Response} res HTTP response
+ * @param next
  */
-const loginHandler = async (req, res) => {
+const loginHandler = async (req, res, next) => {
 	console.log("(loginHandler) Received request to login");
 	const { employee_number, password } = req.body;
 
@@ -29,13 +31,10 @@ const loginHandler = async (req, res) => {
 		return;
 	} else if (!foundUser.verified) {
 		//# Credentials are correct but user has not completed email verification
-		res.status(403).json(
-			getErrorResponse({
-				"fullMessage":
-					"You must verify your email address before you can login. Check your email inbox and follow the instructions in the verification email.",
-			})
+		throw getError(
+			"You must verify your email address before you can login. Check your email inbox and follow the instructions in the verification email.",
+			403
 		);
-		return;
 	}
 
 	res.status(200).json(
