@@ -1,5 +1,5 @@
 import checkObjectDefaults from "../../utils/checkObjectDefaults";
-import getErrorResponse from "../../utils/responses/getErrorResponse";
+import errorMsg from "../../utils/errorMsg";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
 
 const defaultOptions = {
@@ -28,7 +28,7 @@ const updateDocument = (Model, options = {}) =>
 	 * @param  {Express.Response} res - The express response object
 	 */
 	async (req, res) => {
-		const { keyField, successMessage, errorMessage } = checkObjectDefaults(
+		const { keyField, successMessage } = checkObjectDefaults(
 			options,
 			defaultOptions
 		);
@@ -45,12 +45,7 @@ const updateDocument = (Model, options = {}) =>
 				})
 			);
 		} catch (err) {
-			console.log("There was an error while updating a document: ", err);
-			res.status(500).json(
-				getErrorResponse({
-					"fullMessage": errorMessage,
-				})
-			);
+			throw Error(errorMsg("update a document"));
 		}
 	};
 

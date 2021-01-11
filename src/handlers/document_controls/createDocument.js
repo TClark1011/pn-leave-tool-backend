@@ -1,5 +1,6 @@
-import getErrorResponse from "../../utils/responses/getErrorResponse";
+import getError from "../../utils/getError";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
+import errorMsg from "../../utils/errorMsg";
 
 /**
  * Generates a route handling function to create documents of the type of a given Model
@@ -26,12 +27,7 @@ const createDocument = (Model) =>
 				})
 			);
 		} catch (err) {
-			console.log("There was an error while creating a document: ", err);
-			res.status(500).json(
-				getErrorResponse({
-					"attempting": "create a new document",
-				})
-			);
+			throw getError(errorMsg("create a new document"));
 		}
 	};
 

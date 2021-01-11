@@ -1,4 +1,4 @@
-import getErrorResponse from "../../utils/responses/getErrorResponse";
+import errorMsg from "../../utils/errorMsg";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
 
 /**
@@ -21,8 +21,6 @@ const deleteDocument = (Model) =>
 
 			const deleteResult = await Model.findByIdAndDelete(targetId);
 
-			console.log("(fetchAllDocuments) deleteResult: ", deleteResult);
-
 			res.status(200).json(
 				getSuccessResponse({
 					"message": "Successfully deleted the document",
@@ -30,12 +28,7 @@ const deleteDocument = (Model) =>
 				})
 			);
 		} catch (err) {
-			console.log("There was an error while deleting a document: ", err);
-			res.status(500).json(
-				getErrorResponse({
-					"attempting": "delete a document",
-				})
-			);
+			throw Error(errorMsg("create a document"));
 		}
 	};
 

@@ -4,7 +4,7 @@ import Depot from "../../models/Depot.model";
 import Leave from "../../models/Leave.model";
 import RosterDay from "../../models/RosterDay.model";
 import User from "../../models/User.model";
-import getErrorResponse from "../../utils/responses/getErrorResponse";
+import getError from "../../utils/getError";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
 
 /**
@@ -61,12 +61,10 @@ const leaveRequestHandler = async (req, res) => {
 		);
 		return;
 	}
-	res.status(406).json(
-		getErrorResponse({
-			"fullMessage":
-				"The leave tool has estimated that your requested leave will not be approved due to the following dates being unavailable: @break@ You can return to the leave screen and change the dates and try again.",
-			"extraData": invalidDays,
-		})
+
+	throw getError(
+		"The leave tool has estimated that your requested leave will not be approved due to the following dates being unavailable: @break@ You can return to the leave screen and change the dates and try again.",
+		{ "extraData": invalidDays, "status": 406 }
 	);
 	//TODO: Write messages
 };

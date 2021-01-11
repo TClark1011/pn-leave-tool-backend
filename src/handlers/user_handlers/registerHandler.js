@@ -4,6 +4,8 @@ import getSuccessResponse from "../../utils/responses/getSuccessResponse";
 import User from "../../models/User.model";
 import encryptPassword from "../../utils/encryptPassword";
 import getToken from "../../utils/getToken";
+import getError from "../../utils/getError";
+import errorMsg from "../../utils/errorMsg";
 
 /**
  * Handle user registration
@@ -67,14 +69,9 @@ const registerHandler = async (req, res) => {
 				})
 			)
 		)
-		.catch((err) =>
-			res.status(500).json(
-				getErrorResponse({
-					"attempting": "process your registration",
-					"extraData": err,
-				})
-			)
-		);
+		.catch((err) => {
+			throw getError(errorMsg("process your registration"), { "extraData": err });
+		});
 	//TODO: Write messages
 };
 
