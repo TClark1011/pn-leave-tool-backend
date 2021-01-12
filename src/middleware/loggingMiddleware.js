@@ -2,7 +2,7 @@ import winston from "winston";
 import { logger } from "express-winston";
 
 const logFormat = winston.format.printf(
-	({ level, message, timestamp }) => `[${timestamp}] ${level}: ${message}`
+	({ level, message, timestamp }) => `[${timestamp}] [${level}] : ${message}`
 );
 
 const loggerOptions = {
