@@ -14,12 +14,14 @@ const loggerOptions = {
 
 export const combinedLogger = logger({
 	"transports": [new winston.transports.File({ "filename": "logs/info.log" })],
-	"level": "info",
 	...loggerOptions,
 });
 
 export const errorLogger = logger({
-	"transports": [new winston.transports.File({ "filename": "logs/error.log" })],
+	"transports": [
+		new winston.transports.File({ "filename": "logs/error.log" }),
+		new winston.transports.Console(),
+	],
 	"level": "error",
 	...loggerOptions,
 });
