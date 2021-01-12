@@ -2,7 +2,7 @@ import winston from "winston";
 import { logger } from "express-winston";
 
 const logFormat = winston.format.printf(
-	({ level, message, timestamp }) => `${timestamp} ${level}: ${message}`
+	({ level, message, timestamp }) => `[${timestamp}] ${level}: ${message}`
 );
 
 const loggerOptions = {
@@ -12,15 +12,9 @@ const loggerOptions = {
 	"expressFormat": true,
 };
 
-export const infoLogger = logger({
+export const combinedLogger = logger({
 	"transports": [new winston.transports.File({ "filename": "logs/info.log" })],
 	"level": "info",
-	...loggerOptions,
-});
-
-export const warnLogger = logger({
-	"transports": [new winston.transports.File({ "filename": "logs/warn.log" })],
-	"level": "warn",
 	...loggerOptions,
 });
 

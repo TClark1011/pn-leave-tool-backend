@@ -7,11 +7,7 @@ import UserRouter from "./routes/User.router";
 import cors from "cors";
 import { logErrors, sendErrorResponse } from "./middleware/errorMiddleware";
 import helmet from "helmet";
-import {
-	infoLogger,
-	warnLogger,
-	errorLogger,
-} from "./middleware/loggingMiddleware";
+import { combinedLogger, errorLogger } from "./middleware/loggingMiddleware";
 
 const app = express();
 
@@ -19,8 +15,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.use(infoLogger);
-app.use(warnLogger);
+app.use(combinedLogger);
 app.use(errorLogger);
 app.use("/users", UserRouter);
 app.use("/leave", LeaveRouter);
