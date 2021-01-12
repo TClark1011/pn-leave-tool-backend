@@ -11,4 +11,4 @@ build
 .eslintcache
 
 # log files
-logs
+*.log

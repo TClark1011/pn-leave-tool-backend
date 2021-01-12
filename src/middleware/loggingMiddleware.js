@@ -5,23 +5,21 @@ const logFormat = winston.format.printf(
 	({ level, message, timestamp }) => `[${timestamp}] [${level}] : ${message}`
 );
 
-const loggerOptions = {
-	"format": winston.format.combine(winston.format.timestamp(), logFormat),
+const baseFormat = winston.format.combine(winston.format.timestamp(), logFormat),
+
+const options = {
 	"meta": true,
 	"msg": "HTTP {{req.method}} {{req.url}}",
 	"expressFormat": true,
-};
+	"statusLevels": true,
+}
 
-export const combinedLogger = logger({
-	"transports": [new winston.transports.File({ "filename": "logs/info.log" })],
-	...loggerOptions,
-});
-
-export const errorLogger = logger({
+const fileLogger = logger({
 	"transports": [
-		new winston.transports.File({ "filename": "logs/error.log" }),
-		new winston.transports.Console(),
+		new winston.transports.File({ "filename": "logs.log" }),
 	],
-	"level": "error",
-	...loggerOptions,
+	"format": baseFormat,
+	...options
 });
+
+export default loggerMiddleware;
