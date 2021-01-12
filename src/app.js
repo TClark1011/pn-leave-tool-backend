@@ -7,7 +7,7 @@ import UserRouter from "./routes/User.router";
 import cors from "cors";
 import { logErrors, sendErrorResponse } from "./middleware/errorMiddleware";
 import helmet from "helmet";
-import loggerMiddleware from "./middleware/loggingMiddleware";
+import { fileLogger, consoleLogger } from "./middleware/loggingMiddleware";
 
 const app = express();
 
@@ -15,7 +15,8 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.use(loggerMiddleware);
+app.use(fileLogger);
+app.use(consoleLogger);
 app.use("/users", UserRouter);
 app.use("/leave", LeaveRouter);
 app.use("/depots", DepotRouter);
@@ -24,7 +25,7 @@ app.all("/*", (req, res) => {
 	res.status(404).send("Bad url");
 });
 
-// app.use(logErrors);
+app.use(logErrors);
 app.use(sendErrorResponse);
 
 export default app;
