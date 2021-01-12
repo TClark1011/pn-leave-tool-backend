@@ -6,8 +6,11 @@ import LeaveRouter from "./routes/Leave.router";
 import UserRouter from "./routes/User.router";
 import cors from "cors";
 import { logErrors, sendErrorResponse } from "./middleware/errorMiddleware";
+import helmet from "helmet";
 
 const app = express();
+
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
