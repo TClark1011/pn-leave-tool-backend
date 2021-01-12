@@ -1,4 +1,5 @@
 import { format, parse, startOfToday } from "date-fns";
+import { consoleLogger } from "../../middleware/loggingMiddleware";
 import RosterDay from "../../models/RosterDay.model";
 import getError from "../../utils/getError";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
@@ -10,6 +11,10 @@ import getSuccessResponse from "../../utils/responses/getSuccessResponse";
  * @param {Express.Response} res HTTP response
  */
 const lmsDataHandler = async (req, res) => {
+	consoleLogger.log({
+		"level": "info",
+		"message": "Received request to process csv data from LMS",
+	});
 	const data = req.body;
 	const result = {};
 
@@ -41,13 +46,11 @@ const lmsDataHandler = async (req, res) => {
 		}
 	}
 
-	res
-		.status(200)
-		.json(
-			getSuccessResponse({
-				"message": "The LMS data has been processed successfully",
-			})
-		);
+	res.status(200).json(
+		getSuccessResponse({
+			"message": "The LMS data has been processed successfully",
+		})
+	);
 };
 
 export default lmsDataHandler;
