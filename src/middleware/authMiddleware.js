@@ -2,6 +2,7 @@ import express from "express";
 import decodeToken from "../utils/decodeToken";
 import getErrorResponse from "../utils/responses/getErrorResponse";
 import getServerError from "../utils/responses/getErrorResponse";
+import { log } from "./loggingMiddleware";
 
 const authErrorCode = 401;
 
@@ -24,6 +25,10 @@ const getAuthMiddleware = (type) => {
 				) {
 					return next();
 				}
+				log(
+					"Authentication was failed due to incorrect 'operator access key'",
+					"warn"
+				);
 				return res.status(authErrorCode).json(
 					getErrorResponse({
 						"fullMessage": "Incorrect operator access key",
@@ -36,6 +41,7 @@ const getAuthMiddleware = (type) => {
 				) {
 					return next();
 				}
+				log("Authentication was failed due to bad token", "warn");
 				return res.status(authErrorCode).json(
 					getServerError({
 						"fullMessage": "Bad authentication token",
