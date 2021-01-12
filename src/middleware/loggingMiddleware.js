@@ -1,5 +1,5 @@
-import winston from "winston";
-import { logger } from "express-winston";
+import winston, { createLogger } from "winston";
+import { logger as expressLogger } from "express-winston";
 
 const logFormat = winston.format.printf(
 	({ level, message, timestamp }) => `[${timestamp}] [${level}] : ${message}`
@@ -10,35 +10,28 @@ const baseFormat = winston.format.combine(
 	logFormat
 );
 
-const options = {
+const winstonInstance = createLogger({
+	"transports": [
+		new winston.transports.File({
+			"filename": "logs.log",
+			"format": baseFormat,
+		}),
+		new winston.transports.Console({
+			"format": winston.format.combine(winston.format.colorize(), baseFormat),
+			"colorize": true,
+		}),
+	],
+});
+
+const logger = expressLogger({
+	winstonInstance,
 	"meta": true,
 	"msg": "HTTP {{req.method}} {{req.url}}",
 	"expressFormat": true,
 	"statusLevels": true,
-};
-
-export const fileLogger = logger({
-	"transports": [new winston.transports.File({ "filename": "logs.log" })],
-	"format": baseFormat,
-	...options,
 });
 
-export const consoleLogger = logger({
-	"transports": [new winston.transports.Console()],
-	"format": winston.format.combine(winston.format.colorize(), baseFormat),
-	"colorize": true,
-	"prettyPrint": true,
-	...options,
-});
-
-//# Used for manual logging
-export const manualLogger = winston.createLogger({
-	"transports": [new winston.transports.Console()],
-	"format": winston.format.combine(winston.format.colorize(), baseFormat),
-	"colorize": true,
-	"prettyPrint": true,
-	...options,
-});
+export default logger;
 
 /**
  * Log a message with a winston logger
@@ -48,4 +41,4 @@ export const manualLogger = winston.createLogger({
  * @returns {loggerCall} Calls a winston logger, passing the provided parameters
  */
 export const log = (message, level = "info") =>
-	manualLogger.log({ message, level });
+	winstonInstance.log({ message, level });
