@@ -1,5 +1,5 @@
 import { object, ref, string } from "yup";
-import { employeeNumberVal, passwordVal } from "./commonAuthFields";
+import { employeeNumberVal, passwordVal } from "../commonAuthFields";
 import emailRegex from "../regex/emailRegex";
 
 export default object({

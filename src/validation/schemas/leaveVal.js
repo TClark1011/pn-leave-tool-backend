@@ -1,6 +1,6 @@
 import { startOfToday, addWeeks } from "date-fns";
 import { object, date, ref } from "yup";
-import { employeeNumberVal } from "./commonAuthFields";
+import { employeeNumberVal } from "../commonAuthFields";
 
 export default object({
 	"user": employeeNumberVal,
