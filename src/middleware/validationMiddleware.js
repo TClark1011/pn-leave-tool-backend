@@ -1,6 +1,5 @@
 import { validationFailMsg } from "../constants/messages";
 import getError from "../utils/getError";
-import getErrorResponse from "../utils/responses/getErrorResponse";
 
 /**
  * Generate a express route handler that takes  a request and validate.
