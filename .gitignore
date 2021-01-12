@@ -9,3 +9,6 @@ build
 
 # misc
 .eslintcache
+
+# log files
+logs

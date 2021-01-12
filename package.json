@@ -36,6 +36,7 @@
 		"date-fns": "^2.16.1",
 		"express": "^4.17.1",
 		"express-async-errors": "^3.1.1",
+		"express-winston": "^4.0.5",
 		"helmet": "^4.3.1",
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.11.9",
@@ -43,6 +44,7 @@
 		"nodemailer-express-handlebars": "^4.0.0",
 		"random": "^2.2.0",
 		"regenerator-runtime": "^0.13.7",
+		"winston": "^3.3.3",
 		"yup": "^0.32.8"
 	},
 	"engines": {

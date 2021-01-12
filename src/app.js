@@ -7,6 +7,8 @@ import UserRouter from "./routes/User.router";
 import cors from "cors";
 import { logErrors, sendErrorResponse } from "./middleware/errorMiddleware";
 import helmet from "helmet";
+import expressWinston from "express-winston";
+import winston from "winston/lib/winston/config";
 
 const app = express();
 
@@ -22,6 +24,11 @@ app.all("/*", (req, res) => {
 	res.status(404).send("Bad url");
 });
 
+app.use(
+	expressWinston.logger({
+		"transports": [new winston.transports.Console()],
+	})
+);
 app.use(logErrors);
 app.use(sendErrorResponse);
 
