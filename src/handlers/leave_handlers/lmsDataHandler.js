@@ -1,5 +1,5 @@
 import { format, parse, startOfToday } from "date-fns";
-import { consoleLogger } from "../../middleware/loggingMiddleware";
+import { log } from "../../middleware/loggingMiddleware";
 import RosterDay from "../../models/RosterDay.model";
 import getError from "../../utils/getError";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
@@ -11,15 +11,15 @@ import getSuccessResponse from "../../utils/responses/getSuccessResponse";
  * @param {Express.Response} res HTTP response
  */
 const lmsDataHandler = async (req, res) => {
-	consoleLogger.log({
-		"level": "info",
-		"message": "Received request to process csv data from LMS",
-	});
-	const data = req.body;
+	log("Received request to process csv data from LMS");
+	const { data, depot } = req.body;
 	const result = {};
 
-	for (let i = 1; i < data.length; i++) {
+	console.log("(lmsDataHandler) typeof data: ", typeof data);
+
+	for (let i = 0; i < data.length; i++) {
 		const row = data[i];
+		console.log("(lmsDataHandler) row: ", row);
 		for (let x = 1; x < Object.keys(row).length; x++) {
 			const date = Object.keys(row)[x];
 			const isOff = Number(row[date] !== "");
@@ -35,7 +35,8 @@ const lmsDataHandler = async (req, res) => {
 		const formattedDateStr = format(parsedDate, "MM/dd/yyy");
 
 		try {
-			const dayObject = await RosterDay.getDateRecord(formattedDateStr);
+			const dayObject = await RosterDay.getDateRecord(formattedDateStr, depot);
+			console.log(dayObject);
 			dayObject.absentDrivers = offDrivers;
 			await dayObject.save();
 		} catch (err) {
