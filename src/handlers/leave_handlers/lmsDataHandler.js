@@ -12,14 +12,10 @@ import getSuccessResponse from "../../utils/responses/getSuccessResponse";
  */
 const lmsDataHandler = async (req, res) => {
 	log("Received request to process csv data from LMS");
-	const { data, depot } = req.body;
+	const { file, depot } = req.body;
 	const result = {};
-
-	console.log("(lmsDataHandler) typeof data: ", typeof data);
-
-	for (let i = 0; i < data.length; i++) {
-		const row = data[i];
-		console.log("(lmsDataHandler) row: ", row);
+	for (let i = 0; i < file.length; i++) {
+		const row = file[i];
 		for (let x = 1; x < Object.keys(row).length; x++) {
 			const date = Object.keys(row)[x];
 			const isOff = Number(row[date] !== "");

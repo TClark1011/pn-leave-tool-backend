@@ -25,8 +25,16 @@ const getAuthMiddleware = (type) => {
 				) {
 					return next();
 				}
+				console.log(
+					"(authMiddleware) req.headers.operator_access_key: ",
+					req.headers.operator_access_key
+				);
+				console.log(
+					"(authMiddleware) process.env.OPERATOR_ACCESS_KEY: ",
+					process.env.OPERATOR_ACCESS_KEY
+				);
 				log(
-					"Authentication was failed due to incorrect 'operator access key'",
+					"Failed authentication due to incorrect operator access key",
 					"warn"
 				);
 				return res.status(authErrorCode).json(
@@ -41,7 +49,7 @@ const getAuthMiddleware = (type) => {
 				) {
 					return next();
 				}
-				log("Authentication was failed due to bad token", "warn");
+				log("Failed authentication due to bad token", "warn");
 				return res.status(authErrorCode).json(
 					getServerError({
 						"fullMessage": "Bad authentication token",

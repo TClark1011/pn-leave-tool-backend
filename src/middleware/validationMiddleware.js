@@ -1,4 +1,5 @@
 import { validationFailMsg } from "../constants/messages";
+import getError from "../utils/getError";
 import getErrorResponse from "../utils/responses/getErrorResponse";
 
 /**
@@ -19,10 +20,7 @@ const validationMiddleware = (schema, message = validationFailMsg) => async (
 		await schema.validate(req.body);
 		next();
 	} catch (err) {
-		res
-			.status(400)
-			.json(getErrorResponse({ "fullMessage": message, "extraData": err.errors }));
-		return;
+		throw getError(message, { "status": 400, "extraData": err.errors });
 	}
 };
 
