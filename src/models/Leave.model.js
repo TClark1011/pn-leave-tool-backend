@@ -7,7 +7,7 @@ import {
 	leaveDeleteParameters,
 } from "../constants/systemParameters";
 
-mongooseConnect(mongoose, "leave");
+mongooseConnect(mongoose, "Leave");
 
 /**
  * Get the earliest possible date that new leave can start

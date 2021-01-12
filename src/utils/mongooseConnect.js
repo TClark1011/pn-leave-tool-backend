@@ -12,7 +12,7 @@ const mongooseConnect = (mongoose, name) => {
 			"useUnifiedTopology": true,
 		})
 		.then(() => {
-			console.log(`${name} has connected to MongoDB`);
+			console.log(`Model: '${name}' has connected to MongoDB`);
 		})
 		.catch((error) => {
 			console.log("error connecting too MongoDB: ", error);
