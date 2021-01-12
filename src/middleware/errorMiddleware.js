@@ -1,3 +1,4 @@
+import { log } from "winston";
 import getErrorResponse from "../utils/responses/getErrorResponse";
 
 /**
@@ -10,7 +11,7 @@ import getErrorResponse from "../utils/responses/getErrorResponse";
  */
 // eslint-disable-next-line no-unused-vars
 export const logErrors = (err, req, res, next) => {
-	console.log("There was an error: ", err);
+	log(err, "error");
 	next(err);
 };
 
