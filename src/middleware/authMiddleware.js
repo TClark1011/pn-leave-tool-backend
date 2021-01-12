@@ -8,7 +8,7 @@ const authErrorCode = 401;
 /**
  * Generate an authentication middleware route of a specified type
  *
- * @param {string} authTypes The type of authentication to use
+ * @param {string[] | string} authTypes The types of authentication to be used
  * @returns {Express.Route} A middleware route that will authenticate requests
  */
 const getAuthMiddleware = (authTypes) => {
