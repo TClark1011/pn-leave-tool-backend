@@ -28,6 +28,11 @@ const userSchema = new Schema({
 	},
 	"date_created": { "type": Date, "default": Date.now() },
 	"verified": { "type": Boolean, "default": false },
+	"passwordReset": {
+		"isResettingPassword": { "type": Boolean, "default": false },
+		"passwordResetKey": { "type": String },
+		"passwordResetKeyExpires": { "type": Date },
+	},
 });
 
 /**

@@ -9,6 +9,8 @@ import registerVal from "../validation/schemas/registerVal";
 import updateDocument from "../handlers/document_controls/updateDocument";
 import getAuthMiddleware from "../middleware/authMiddleware";
 import resendVerificationEmailHandler from "../utils/emails/resendVerificationEmailHandler";
+import forgotPasswordHandler from "../handlers/user_handlers/forgotPasswordHandler";
+import resetPasswordHandler from "../handlers/user_handlers/resetPasswordHandler";
 
 const UserRouter = Router();
 
@@ -28,7 +30,6 @@ UserRouter.post(
 UserRouter.get("/verify/:token", verifyHandler);
 
 UserRouter.use("/update", getAuthMiddleware("login"));
-
 //# User updates information
 UserRouter.put(
 	"/update",
@@ -38,5 +39,9 @@ UserRouter.put(
 			"An error occurred while attempting to update your details, please try again later",
 	})
 );
+
+UserRouter.post("/forgotPassword/:employee_number", forgotPasswordHandler);
+
+UserRouter.post("/resetPassword/:reset_key", resetPasswordHandler);
 
 export default UserRouter;
