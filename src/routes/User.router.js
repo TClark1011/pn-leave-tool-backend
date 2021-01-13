@@ -8,7 +8,7 @@ import loginVal from "../validation/schemas/loginVal";
 import registerVal from "../validation/schemas/registerVal";
 import updateDocument from "../handlers/document_controls/updateDocument";
 import getAuthMiddleware from "../middleware/authMiddleware";
-import resendVerificationEmailHandler from "../utils/emails/resendVerficationEmailHandler";
+import resendVerificationEmailHandler from "../utils/emails/resendVerificationEmailHandler";
 
 const UserRouter = Router();
 
@@ -27,7 +27,7 @@ UserRouter.post(
 
 UserRouter.get("/verify/:token", verifyHandler);
 
-UserRouter.use("/", getAuthMiddleware("login"));
+UserRouter.use("/update", getAuthMiddleware("login"));
 
 //# User updates information
 UserRouter.put(
