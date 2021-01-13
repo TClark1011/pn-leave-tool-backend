@@ -1,4 +1,3 @@
-import { format, toDate } from "date-fns";
 import getToken from "../getToken";
 import sendEmail from "./sendEmail";
 
