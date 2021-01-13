@@ -1,3 +1,5 @@
+import { log } from "../middleware/loggingMiddleware";
+
 /**
  * Connects a mongoose instance to MongoDB that is used to initialise a Model.
  *
@@ -12,10 +14,7 @@ const mongooseConnect = (mongoose, name) => {
 			"useUnifiedTopology": true,
 		})
 		.then(() => {
-			console.log(`Model: '${name}' has connected to MongoDB`);
-		})
-		.catch((error) => {
-			console.log("error connecting too MongoDB: ", error);
+			log(`'${name}' model has connected to MongoDB`);
 		});
 };
 
