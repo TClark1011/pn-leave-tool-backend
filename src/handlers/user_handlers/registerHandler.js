@@ -52,7 +52,7 @@ const registerHandler = async (req, res) => {
 		userObj.save();
 	}
 
-	sendVerificationEmail(req.body)
+	sendVerificationEmail(userObj)
 		.then(() =>
 			res.status(200).json(
 				getSuccessResponse({

@@ -1,3 +1,4 @@
+import { format, toDate } from "date-fns";
 import getToken from "../getToken";
 import sendEmail from "./sendEmail";
 
@@ -8,15 +9,15 @@ import sendEmail from "./sendEmail";
  * @returns {Promise} calls 'sendEmail'
  */
 const sendVerificationEmail = (userData) => {
-	const { date_created, name, depot, employee_number } = userData;
+	const { date, name, employee_number } = userData;
+	console.log("(sendVerificationEmail) userData: ", userData);
 	return sendEmail(userData.email, {
 		"template": "verification",
 		"subject": "Email Verification",
 		"context": {
 			name,
 			employee_number,
-			"date": date_created,
-			"depot": depot.name,
+			"date": new Date(date),
 			"token": getToken(userData.employee_number),
 			"url": process.env.FRONTEND_URL,
 		},
