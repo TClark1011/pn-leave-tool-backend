@@ -1,5 +1,6 @@
-import { log } from "winston";
+import { genericErrorMsg } from "../constants/messages";
 import getErrorResponse from "../utils/responses/getErrorResponse";
+import { log } from "./loggingMiddleware";
 
 /**
  * Log errors to console
@@ -11,7 +12,7 @@ import getErrorResponse from "../utils/responses/getErrorResponse";
  */
 // eslint-disable-next-line no-unused-vars
 export const logErrors = (err, req, res, next) => {
-	log(err, "error");
+	log(err.stack, "error");
 	next(err);
 };
 
@@ -26,10 +27,10 @@ export const logErrors = (err, req, res, next) => {
 // eslint-disable-next-line no-unused-vars
 export const sendErrorResponse = (err, req, res, next) => {
 	const response = getErrorResponse({
-		"fullMessage": err.message,
+		"fullMessage": genericErrorMsg,
 	});
 	if (err.extraData) {
 		response.extraData = err.extraData;
 	}
-	res.status(err.status).json(response);
+	res.status(err?.status || 500).json(response);
 };
