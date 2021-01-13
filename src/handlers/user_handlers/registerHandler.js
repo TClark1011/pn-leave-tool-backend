@@ -1,10 +1,9 @@
-import sendEmail from "../../utils/emails/sendEmail";
 import getErrorResponse from "../../utils/responses/getErrorResponse";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
 import User from "../../models/User.model";
 import encryptPassword from "../../utils/encryptPassword";
-import getToken from "../../utils/getToken";
 import { log } from "../../middleware/loggingMiddleware";
+import sendVerificationEmail from "../../utils/emails/sendVerificationEmail";
 
 /**
  * Handle user registration
@@ -53,15 +52,7 @@ const registerHandler = async (req, res) => {
 		userObj.save();
 	}
 
-	sendEmail(req.body.email, {
-		"template": "verification",
-		"subject": "Email Verification",
-		"context": {
-			...req.body,
-			"token": getToken(req.body.employee_number),
-			"url": process.env.FRONTEND_URL,
-		},
-	})
+	sendVerificationEmail(req.body)
 		.then(() =>
 			res.status(200).json(
 				getSuccessResponse({
