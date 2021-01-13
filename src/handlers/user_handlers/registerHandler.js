@@ -1,11 +1,10 @@
-import sendEmail from "../../utils/sendEmail";
+import sendEmail from "../../utils/emails/sendEmail";
 import getErrorResponse from "../../utils/responses/getErrorResponse";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
 import User from "../../models/User.model";
 import encryptPassword from "../../utils/encryptPassword";
 import getToken from "../../utils/getToken";
-import getError from "../../utils/getError";
-import errorMsg from "../../utils/errorMsg";
+import { log } from "../../middleware/loggingMiddleware";
 
 /**
  * Handle user registration
@@ -71,7 +70,16 @@ const registerHandler = async (req, res) => {
 			)
 		)
 		.catch((err) => {
-			throw getError(errorMsg("process your registration"), { "extraData": err });
+			res.status(500).json(
+				getErrorResponse({
+					"fullMessage":
+						"There was an error trying to process your registration. Please try again later",
+				})
+			);
+			log(
+				"An error occurred attempting to send verification email. " + err,
+				"err"
+			);
 		});
 	//TODO: Write messages
 };
