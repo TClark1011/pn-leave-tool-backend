@@ -30,8 +30,8 @@ const userSchema = new Schema({
 	"verified": { "type": Boolean, "default": false },
 	"passwordReset": {
 		"isResettingPassword": { "type": Boolean, "default": false },
-		"passwordResetKey": { "type": String },
-		"passwordResetKeyExpires": { "type": Date },
+		"passwordResetKey": { "type": String, "default": "" },
+		"passwordResetKeyExpires": { "type": Date, "default": new Date() },
 	},
 });
 

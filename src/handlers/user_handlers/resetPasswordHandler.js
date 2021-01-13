@@ -16,7 +16,7 @@ const resetPasswordHandler = async (req, res) => {
 		"passwordReset": {
 			"isResettingPassword": true,
 			"passwordResetKey": reset_key,
-			"passwordResetKeyExpires": { "$gte": new Date() },
+			// "passwordResetKeyExpires": { "$gte": new Date() },
 		},
 	});
 	foundUser.password = encryptPassword(password);

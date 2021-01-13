@@ -2,6 +2,7 @@ import User from "../../models/User.model";
 import crypto from "crypto";
 import { addHours } from "date-fns";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
+import sendEmail from "../../utils/emails/sendEmail";
 
 /**
  * Handle request to start the password reset process
@@ -18,12 +19,20 @@ const forgotPasswordHandler = async (req, res) => {
 	foundUser.passwordResetKey = key;
 	foundUser.passwordResetKeyExpires = addHours(new Date(), 1);
 	foundUser.save();
-	res.status(200).json(
-		getSuccessResponse({
-			"message":
-				"A message has been sent to the email address linked to your account. Follow the instructions in the message to reset your password.",
-		})
-	);
+
+	sendEmail(foundUser.email, {
+		"subject": "Forgot Password",
+		"template": "forgotPassword",
+		"context": { ...foundUser, key },
+	}).then(() => {
+		res.status(200).json(
+			getSuccessResponse({
+				"message":
+					"A message has been sent to the email address linked to your account. Follow the instructions in the message to reset your password.",
+			})
+		);
+	});
+
 	//TODO: Write messages
 };
 
