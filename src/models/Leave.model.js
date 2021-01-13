@@ -6,6 +6,7 @@ import {
 	leaveStartMinOffset,
 	leaveDeleteParameters,
 } from "../constants/systemParameters";
+import { log } from "../middleware/loggingMiddleware";
 
 mongooseConnect(mongoose, "Leave");
 
@@ -72,38 +73,23 @@ const leaveSchema = new Schema({
  * Delete old leave items whenever leave is fetched
  */
 leaveSchema.pre("find", async () => {
-	console.log("Deleting old leave request items...");
-	await Leave.deleteMany({
-		"status": -1,
-		"submitted": { "$lt": subDays(new Date(), leaveDeleteParameters.denied) },
-	})
-		.then((result) => {
-			console.log(
-				`${result.deletedCount} old denied leave requests were deleted`
-			);
+	for (const status of ["denied", "allowed"]) {
+		log(`Deleting old ${status} leave items`);
+		await Leave.deleteMany({
+			"status": -1,
+			"submitted": { "$lt": subDays(new Date(), leaveDeleteParameters[status]) },
 		})
-		.catch((error) => {
-			console.log(
-				"There was an error while deleting old denied leave requests: ",
-				error
-			);
-		});
-
-	await Leave.deleteMany({
-		"status": 1,
-		"dates.end": { "$lt": subDays(new Date(), leaveDeleteParameters.allowed) },
-	})
-		.then((result) => {
-			console.log(
-				`${result.deletedCount} old allowed leave requests were deleted`
-			);
-		})
-		.catch((error) => {
-			console.log(
-				"There was an error while deleting old allowed leave requests: ",
-				error
-			);
-		});
+			.then((result) => {
+				log(`${result.deletedCount} old denied leave requests were deleted`);
+			})
+			.catch((error) => {
+				log(
+					"There was an error while deleting old denied leave requests: " +
+						error,
+					"error"
+				);
+			});
+	}
 });
 
 const Leave = model("leave", leaveSchema);

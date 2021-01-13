@@ -25,14 +25,6 @@ const getAuthMiddleware = (type) => {
 				) {
 					return next();
 				}
-				console.log(
-					"(authMiddleware) req.headers.operator_access_key: ",
-					req.headers.operator_access_key
-				);
-				console.log(
-					"(authMiddleware) process.env.OPERATOR_ACCESS_KEY: ",
-					process.env.OPERATOR_ACCESS_KEY
-				);
 				log(
 					"Failed authentication due to incorrect operator access key",
 					"warn"

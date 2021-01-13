@@ -11,7 +11,6 @@ import getError from "../../utils/getError";
  * @param {Express.Response} res HTTP response
  */
 const loginHandler = async (req, res) => {
-	console.log("(loginHandler) Received request to login");
 	const { employee_number, password } = req.body;
 
 	const foundUser = await User.getFromEmployeeNumber(employee_number);

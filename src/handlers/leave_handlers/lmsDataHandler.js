@@ -32,7 +32,6 @@ const lmsDataHandler = async (req, res) => {
 
 		try {
 			const dayObject = await RosterDay.getDateRecord(formattedDateStr, depot);
-			console.log(dayObject);
 			dayObject.absentDrivers = offDrivers;
 			await dayObject.save();
 		} catch (err) {
