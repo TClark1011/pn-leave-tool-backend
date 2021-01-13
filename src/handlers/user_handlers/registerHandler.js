@@ -60,6 +60,7 @@ const registerHandler = async (req, res) => {
 		"context": {
 			...req.body,
 			"token": getToken(req.body.employee_number),
+			"url": process.env.FRONTEND_URL,
 		},
 	})
 		.then(() =>
