@@ -8,6 +8,7 @@ import loginVal from "../validation/schemas/loginVal";
 import registerVal from "../validation/schemas/registerVal";
 import updateDocument from "../handlers/document_controls/updateDocument";
 import getAuthMiddleware from "../middleware/authMiddleware";
+import resendVerificationEmailHandler from "../utils/emails/resendVerficationEmailHandler";
 
 const UserRouter = Router();
 
@@ -18,6 +19,11 @@ UserRouter.post("/login", loginHandler);
 //# User Registration
 UserRouter.post("/register", validationMiddleware(registerVal));
 UserRouter.post("/register", registerHandler);
+
+UserRouter.post(
+	"/resendVerification/:employee_number",
+	resendVerificationEmailHandler
+);
 
 UserRouter.get("/verify/:token", verifyHandler);
 
