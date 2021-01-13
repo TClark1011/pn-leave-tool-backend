@@ -4,6 +4,8 @@ import random from "random";
 import getToken from "../utils/getToken";
 import User from "../models/User.model";
 import Depot from "../models/Depot.model";
+import md5 from "md5";
+import axios from "axios";
 
 let app;
 let api;
@@ -27,6 +29,23 @@ const getRandomCredentials = () => ({
 
 let testDepot = {};
 
+const testEmail = `${random.int(10000, 99999999)}@mailkept.com`;
+const emailHash = md5(testEmail);
+/**
+ * Fetch the email inbox used for testing
+ *
+ * @returns {Promise} Promise for a get request to fetch the inbox
+ */
+const fetchTestInbox = () =>
+	axios({
+		"method": "GET",
+		"url": `https://privatix-temp-mail-v1.p.rapidapi.com/request/mail/id/${emailHash}/`,
+		"headers": {
+			"x-rapidapi-key": process.env.TEST_EMAIL_API_KEY,
+			"x-rapidapi-host": "privatix-temp-mail-v1.p.rapidapi.com",
+		},
+	}).catch((err) => err);
+
 /**
  * Takes an object with "employee_number" and "password" fields and adds the extra fields required
  * for user registration
@@ -38,12 +57,13 @@ const extendRegCredentials = (credentials) => ({
 	...credentials,
 	"confirm_employee_number": credentials.employee_number,
 	"confirm_password": credentials.password,
-	"email": "fake@email.com",
+	"email": testEmail,
 	"depot": testDepot._id,
 	"name": `Test User (${random.int(1000, 9999)})`,
 });
 
 let testCredentials = getRandomCredentials();
+let startingInboxState;
 
 beforeAll(async (done) => {
 	testDepot = new Depot({
@@ -52,6 +72,7 @@ beforeAll(async (done) => {
 		"hidden": true,
 	});
 	await testDepot.save();
+	startingInboxState = await fetchTestInbox();
 	done();
 });
 
@@ -82,7 +103,22 @@ describe("Can register new account and login", () => {
 			.send(extendRegCredentials(testCredentials))
 			.expect("Content-Type", /json/)
 			.expect(200);
-		//TODO: Use random depot
+		done();
+	});
+
+	it("Sent the verification email", async (done) => {
+		const newInboxState = await fetchTestInbox();
+		expect(startingInboxState).not.toEqual(newInboxState);
+		done();
+	});
+
+	it("Can resend the verification email", async (done) => {
+		const preResendInboxState = await fetchTestInbox();
+		await api.post(
+			`${rootUrl}/resendVerification/${testCredentials.employee_number}`
+		);
+		const postResendInboxState = await fetchTestInbox();
+		expect(preResendInboxState).not.toEqual(postResendInboxState);
 		done();
 	});
 
