@@ -10,7 +10,6 @@ import sendEmail from "./sendEmail";
  */
 const sendVerificationEmail = (userData) => {
 	const { date, name, employee_number } = userData;
-	console.log("(sendVerificationEmail) userData: ", userData);
 	return sendEmail(userData.email, {
 		"template": "verification",
 		"subject": "Email Verification",
