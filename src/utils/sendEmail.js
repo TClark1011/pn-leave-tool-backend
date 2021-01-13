@@ -35,7 +35,6 @@ const sendEmail = (to, { subject, template, context }) => {
 			"refreshToken": process.env.EMAIL_REFRESH_TOKEN,
 			accessToken,
 			"user": process.env.EMAIL_USER,
-			"pass": process.env.EMAIL_PASS,
 		},
 	});
 
