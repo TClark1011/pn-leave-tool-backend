@@ -16,14 +16,17 @@ const forgotPasswordHandler = async (req, res) => {
 	const foundUser = await User.getFromEmployeeNumber(employee_number);
 	const key = crypto.randomBytes(16).toString("hex");
 	foundUser.passwordReset.isResettingPassword = true;
-	foundUser.passwordResetKey = key;
-	foundUser.passwordResetKeyExpires = addHours(new Date(), 1);
+	foundUser.passwordReset.passwordResetKey = key;
+	foundUser.passwordReset.passwordResetKeyExpires = addHours(new Date(), 1);
 	foundUser.save();
 
 	sendEmail(foundUser.email, {
 		"subject": "Forgot Password",
 		"template": "forgotPassword",
-		"context": { ...foundUser, key },
+		"context": {
+			"name": foundUser.name,
+			"link": `${process.env.FRONTEND_URL}/users/resetPassword/${key}`,
+		},
 	}).then(() => {
 		res.status(200).json(
 			getSuccessResponse({

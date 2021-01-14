@@ -1,4 +1,8 @@
 import mongoose, { Schema, model } from "mongoose";
+import {
+	defaultPasswordResetKey,
+	defaultPasswordResetKeyExpires,
+} from "../constants/defaultValues";
 import mongooseConnect from "../utils/mongooseConnect";
 import emailRegex from "../validation/regex/emailRegex";
 
@@ -30,8 +34,11 @@ const userSchema = new Schema({
 	"verified": { "type": Boolean, "default": false },
 	"passwordReset": {
 		"isResettingPassword": { "type": Boolean, "default": false },
-		"passwordResetKey": { "type": String, "default": "" },
-		"passwordResetKeyExpires": { "type": Date, "default": new Date() },
+		"passwordResetKey": { "type": String, "default": defaultPasswordResetKey },
+		"passwordResetKeyExpires": {
+			"type": Date,
+			"default": defaultPasswordResetKeyExpires,
+		},
 	},
 });
 

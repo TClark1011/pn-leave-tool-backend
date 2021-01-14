@@ -1,3 +1,7 @@
+import {
+	defaultPasswordResetKey,
+	defaultPasswordResetKeyExpires,
+} from "../../constants/defaultValues";
 import User from "../../models/User.model";
 import encryptPassword from "../../utils/encryptPassword";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
@@ -13,16 +17,15 @@ const resetPasswordHandler = async (req, res) => {
 	const { password } = req.body;
 
 	const foundUser = await User.findOne({
-		"passwordReset": {
-			"isResettingPassword": true,
-			"passwordResetKey": reset_key,
-			// "passwordResetKeyExpires": { "$gte": new Date() },
-		},
+		"passwordReset.isResettingPassword": true,
+		"passwordReset.passwordResetKey": reset_key,
+		"passwordReset.passwordResetKeyExpires": { "$gte": new Date() },
 	});
-	foundUser.password = encryptPassword(password);
+	foundUser.password = await encryptPassword(password);
 	foundUser.passwordReset.isResettingPassword = false;
-	foundUser.passwordReset.passwordResetKey = "";
-	foundUser.passwordReset.passwordResetKeyExpires = new Date();
+	foundUser.passwordReset.passwordResetKey = defaultPasswordResetKey;
+	foundUser.passwordReset.passwordResetKeyExpires = defaultPasswordResetKeyExpires;
+	await foundUser.save();
 	res
 		.status(200)
 		.json(getSuccessResponse({ "message": "Your password has been updated" }));
