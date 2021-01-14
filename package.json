@@ -45,6 +45,7 @@
 		"mongoose": "^5.11.9",
 		"nodemailer": "^6.4.17",
 		"nodemailer-express-handlebars": "^4.0.0",
+		"pn-leave-tool-validation": "^0.8.3",
 		"random": "^2.2.0",
 		"regenerator-runtime": "^0.13.7",
 		"winston": "^3.3.3",
