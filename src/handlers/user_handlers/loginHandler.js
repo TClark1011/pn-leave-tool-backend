@@ -2,7 +2,8 @@ import User from "../../models/User.model";
 import bcrypt from "bcrypt";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
 import getToken from "../../utils/getToken";
-import getError from "../../utils/getError";
+import getErrorResponse from "../../utils/responses/getErrorResponse";
+import { log } from "../../middleware/loggingMiddleware";
 
 /**
  * Handle user login.
@@ -15,18 +16,31 @@ const loginHandler = async (req, res) => {
 
 	const foundUser = await User.getFromEmployeeNumber(employee_number);
 
-	const userIsAuthenticated =
-		foundUser && (await bcrypt.compare(password, foundUser.password));
+	const passwordMatch = await bcrypt.compare(password, foundUser.password);
+	const userIsAuthenticated = foundUser && passwordMatch;
 
 	if (!userIsAuthenticated) {
 		//# If no user object was found (incorrect employee number) or password was incorrect
-		throw getError("Incorrect Employee Number or Password", 401);
+		if (foundUser && !passwordMatch) {
+			log("Failed log in attempt due to incorrect password", "warn");
+		}
+		log("Unverified user attempted to log in", "warn");
+		res.status(401).json(
+			getErrorResponse({
+				"fullMessage": "Incorrect employee number or password",
+			})
+		);
+		return;
 	} else if (!foundUser.verified) {
 		//# Credentials are correct but user has not completed email verification
-		throw getError(
-			"You must verify your email address before you can login. Check your email inbox and follow the instructions in the verification email.",
-			403
+		log("Unverified user attempted to log in", "warn");
+		res.status(403).json(
+			getErrorResponse({
+				"fullMessage":
+					"You must verify your email address before you can login. Check your email inbox and follow the instructions in the verification email.",
+			})
 		);
+		return;
 	}
 
 	res.status(200).json(
