@@ -8,6 +8,7 @@ import cors from "cors";
 import { logErrors, sendErrorResponse } from "./middleware/errorMiddleware";
 import helmet from "helmet";
 import logger from "./middleware/loggingMiddleware";
+import ifNotTesting from "./utils/ifNotTesting";
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.use(logger);
+ifNotTesting(() => app.use(logger));
 app.use("/users", UserRouter);
 app.use("/leave", LeaveRouter);
 app.use("/depots", DepotRouter);
@@ -24,7 +25,7 @@ app.all("/*", (req, res) => {
 	res.status(404).send("Bad url");
 });
 
-app.use(logErrors);
+ifNotTesting(() => app.use(logErrors));
 app.use(sendErrorResponse);
 
 export default app;
