@@ -3,8 +3,7 @@ import leaveRequestHandler from "../handlers/leave_handlers/leaveRequestHandler"
 import lmsDataHandler from "../handlers/leave_handlers/lmsDataHandler";
 import getAuthMiddleware from "../middleware/authMiddleware";
 import validationMiddleware from "../middleware/validationMiddleware";
-import leaveVal from "../validation/schemas/leaveVal";
-import lmsDataVal from "../validation/schemas/lmsDataVal";
+import { lmsDataVal, leaveVal } from "pn-leave-tool-validation";
 
 const LeaveRouter = Router();
 

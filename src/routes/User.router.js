@@ -4,13 +4,12 @@ import registerHandler from "../handlers/user_handlers/registerHandler";
 import verifyHandler from "../handlers/user_handlers/verifyHandler";
 import validationMiddleware from "../middleware/validationMiddleware";
 import User from "../models/User.model";
-import loginVal from "../validation/schemas/loginVal";
-import registerVal from "../validation/schemas/registerVal";
 import updateDocument from "../handlers/document_controls/updateDocument";
 import getAuthMiddleware from "../middleware/authMiddleware";
 import resendVerificationEmailHandler from "../utils/emails/resendVerificationEmailHandler";
 import forgotPasswordHandler from "../handlers/user_handlers/forgotPasswordHandler";
 import resetPasswordHandler from "../handlers/user_handlers/resetPasswordHandler";
+import { loginVal, registerVal } from "pn-leave-tool-validation";
 
 const UserRouter = Router();
 
