@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, isValid } from "date-fns";
 import nodemailer from "nodemailer";
 import hbs from "nodemailer-express-handlebars";
 import { google } from "googleapis";
@@ -48,7 +48,7 @@ const sendEmail = (to, { subject, template, context }) => {
 		})
 	);
 
-	if (context.date) {
+	if (context.date && isValid(context.date)) {
 		context.date = format(context.date, "hh:mm - dd/mm/yyyy");
 	}
 

@@ -1,8 +1,8 @@
 import { log } from "../../middleware/loggingMiddleware";
 import User from "../../models/User.model";
-import sendVerificationEmail from "./sendVerificationEmail";
-import getSuccessResponse from "../responses/getSuccessResponse";
-import getErrorResponse from "../responses/getErrorResponse";
+import sendVerificationEmail from "../../utils/emails/sendVerificationEmail";
+import getSuccessResponse from "../../utils/responses/getSuccessResponse";
+import getErrorResponse from "../../utils/responses/getErrorResponse";
 
 /**
  * Handle request to resend verification email
@@ -15,7 +15,7 @@ const resendVerificationEmailHandler = async (req, res) => {
 
 	const foundUser = await User.getFromEmployeeNumber(employee_number);
 
-	console.log("(resendVerficationEmailHandler) foundUser: ", foundUser);
+	console.log("(resendVerificationEmailHandler) foundUser: ", foundUser);
 
 	if (!foundUser.verified) {
 		sendVerificationEmail(foundUser)

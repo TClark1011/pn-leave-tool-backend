@@ -4,11 +4,12 @@ import sendEmail from "./sendEmail";
 /**
  * Send verification email to user
  *
- * @param {User} userData users data
+ * @param {User} userData Raw user document data pulled straight from mongoose without modification
  * @returns {Promise} calls 'sendEmail'
  */
 const sendVerificationEmail = (userData) => {
-	const { date, name, employee_number } = userData;
+	const { date_created, name, employee_number } = userData;
+	const date = date_created;
 	return sendEmail(userData.email, {
 		"template": "verification",
 		"subject": "Email Verification",

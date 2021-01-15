@@ -6,7 +6,7 @@ import validationMiddleware from "../middleware/validationMiddleware";
 import User from "../models/User.model";
 import updateDocument from "../handlers/document_controls/updateDocument";
 import getAuthMiddleware from "../middleware/authMiddleware";
-import resendVerificationEmailHandler from "../utils/emails/resendVerificationEmailHandler";
+import resendVerificationEmailHandler from "../handlers/user_handlers/resendVerificationEmailHandler";
 import forgotPasswordHandler from "../handlers/user_handlers/forgotPasswordHandler";
 import resetPasswordHandler from "../handlers/user_handlers/resetPasswordHandler";
 import { loginVal, registerVal } from "pn-leave-tool-validation";
