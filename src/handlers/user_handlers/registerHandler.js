@@ -23,7 +23,7 @@ const registerHandler = async (req, res) => {
 			res
 				.status(401)
 				.json(
-					getErrorResponse({ "message": errorSummary + errorLongDescription })
+					getErrorResponse({ "fullMessage": errorSummary + errorLongDescription })
 				);
 			return;
 		}

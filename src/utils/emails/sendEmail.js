@@ -2,6 +2,7 @@ import { format, isValid } from "date-fns";
 import nodemailer from "nodemailer";
 import hbs from "nodemailer-express-handlebars";
 import { google } from "googleapis";
+import { log } from "../../middleware/loggingMiddleware";
 
 const OAuth2 = google.auth.OAuth2;
 
@@ -23,9 +24,10 @@ const accessToken = oauth2Client.getAccessToken();
  * @param {string} options.subject The subject of the email
  * @param {string} options.template The name of the template file (without file extension) to be used to build the email body
  * @param {object} options.context The data used to fill in the template
+ * @param {string} options.from Ther username the email should come from
  * @returns {Promise} the promise to send the email
  */
-const sendEmail = (to, { subject, template, context }) => {
+const sendEmail = (to, { subject, template, context, from }) => {
 	const transporter = nodemailer.createTransport({
 		"service": "gmail",
 		"auth": {
@@ -52,8 +54,14 @@ const sendEmail = (to, { subject, template, context }) => {
 		context.date = format(context.date, "hh:mm - dd/mm/yyyy");
 	}
 
+	const fromEmail = from
+		? `${from}@pnleave.com`
+		: `${process.env.EMAIL_USER}@gmail.com`;
+
+	log(`Sending email from ${fromEmail} to ${to}`);
+
 	return transporter.sendMail({
-		"from": `"PN Annual Leave" <${process.env.EMAIL_USER}@gmail.com>`,
+		"from": `"PN Leave Tool" <${fromEmail}>`,
 		to,
 		subject,
 		template,

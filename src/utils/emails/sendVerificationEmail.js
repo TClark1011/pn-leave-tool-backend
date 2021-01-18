@@ -1,3 +1,4 @@
+import { log } from "../../middleware/loggingMiddleware";
 import getToken from "../getToken";
 import sendEmail from "./sendEmail";
 
@@ -10,7 +11,7 @@ import sendEmail from "./sendEmail";
 const sendVerificationEmail = (userData) => {
 	const { date_created, name, employee_number } = userData;
 	const date = date_created;
-	return sendEmail(userData.email, {
+	const emailOptions = {
 		"template": "verification",
 		"subject": "Email Verification",
 		"context": {
@@ -20,7 +21,12 @@ const sendVerificationEmail = (userData) => {
 			"token": getToken(userData.employee_number),
 			"url": process.env.FRONTEND_URL,
 		},
-	});
+		"from": "registration",
+	};
+
+	log(`Sending verification email with the options: ${emailOptions}`);
+
+	return sendEmail(userData.email, emailOptions);
 };
 
 export default sendVerificationEmail;
