@@ -15,6 +15,7 @@ const userSchema = new Schema({
 		"required": true,
 		"maxlength": [6, enLengthMessage],
 		"minlength": [6, enLengthMessage],
+		"unique": true,
 	},
 	"password": { "type": String, "required": true },
 	"name": { "type": String, "required": true },
