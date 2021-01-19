@@ -64,8 +64,8 @@ const User = model("User", userSchema);
  * you want to retrieve the information of.
  * @returns {Document<User>} The corresponding user document
  */
-User.getFromEmployeeNumber = async (employee_number) => {
-	return await User.findOne({ employee_number }).populate("depot", "name");
+User.getFromEmployeeNumber = (employee_number) => {
+	return User.findOne({ employee_number }).populate("depot", "name");
 };
 
 export default User;
