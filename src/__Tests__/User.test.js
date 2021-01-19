@@ -41,7 +41,7 @@ const fetchTestInbox = () =>
 		"method": "GET",
 		"url": `https://privatix-temp-mail-v1.p.rapidapi.com/request/mail/id/${emailHash}/`,
 		"headers": {
-			"x-rapidapi-key": process.env.TEST_EMAIL_API_KEY,
+			"x-rapidapi-key": process.env.EMAIL_TESTING_API_KEY,
 			"x-rapidapi-host": "privatix-temp-mail-v1.p.rapidapi.com",
 		},
 	}).catch((err) => err);
