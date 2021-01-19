@@ -18,7 +18,7 @@ const registerHandler = async (req, res) => {
 		if (foundUser.verified) {
 			const errorSummary = `An account with the Employee Number '${employee_number}' already exists.`;
 			const errorLongDescription =
-				" If you are creator of that account you can enter your password and press 'login'. If you did not create that account, please contact ...";
+				"If you are the creator of that account you can return to the login screen and enter your employee number and password and press 'login'. If you did not create that account, please contact support.";
 			//TODO: Write messages
 			res
 				.status(401)
@@ -33,10 +33,12 @@ const registerHandler = async (req, res) => {
 		}
 		foundUser.password = await encryptPassword(password);
 		await foundUser.save();
-		res
-			.status(200)
-			.json(getSuccessResponse({ "message": "do email verification" }));
-		//TODO: Write messages
+		res.status(200).json(
+			getSuccessResponse({
+				"message":
+					"An email has been sent to your email address with instructions on how to setup your account. If you cannot see the email, please make sure to check your spam folder.",
+			})
+		);
 		return;
 	}
 
