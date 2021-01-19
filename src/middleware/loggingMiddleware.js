@@ -42,3 +42,11 @@ export default logger;
  */
 export const log = (message, level = "info") =>
 	winstonInstance.log({ message, level });
+
+/**
+ * Convert a JSON object into a string so it can be logged
+ *
+ * @param {object} object The object to stringify
+ * @returns {string} The stringified version of the passed object
+ */
+export const stringifyObject = (object) => JSON.stringify(object, null, 2);

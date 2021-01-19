@@ -51,12 +51,10 @@ const sendEmail = (to, { subject, template, context, from }) => {
 	);
 
 	if (context.date && isValid(context.date)) {
-		context.date = format(context.date, "hh:mm - dd/mm/yyyy");
+		context.date = format(context.date, "hh:mm - dd/MM/yyyy");
 	}
 
-	const fromEmail = from
-		? `${from}@pnleave.com`
-		: `${process.env.EMAIL_USER}@gmail.com`;
+	const fromEmail = from ? `${from}@pnleave.com` : process.env.EMAIL_ADDRESS;
 
 	log(`Sending email from ${fromEmail} to ${to}`);
 
@@ -65,7 +63,11 @@ const sendEmail = (to, { subject, template, context, from }) => {
 		to,
 		subject,
 		template,
-		"context": { ...context, "url": `${process.env.BACKEND_URL}` },
+		"context": {
+			...context,
+			"url": `${process.env.BACKEND_URL}`,
+			"supportEmail": process.env.SUPPORT_EMAIL,
+		},
 	});
 };
 

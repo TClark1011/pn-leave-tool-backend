@@ -1,4 +1,4 @@
-import { log } from "../../middleware/loggingMiddleware";
+import { log, stringifyObject } from "../../middleware/loggingMiddleware";
 import getToken from "../getToken";
 import sendEmail from "./sendEmail";
 
@@ -9,8 +9,8 @@ import sendEmail from "./sendEmail";
  * @returns {Promise} calls 'sendEmail'
  */
 const sendVerificationEmail = (userData) => {
-	const { date_created, name, employee_number } = userData;
-	const date = date_created;
+	const { date, name, employee_number } = userData;
+	log("Sending verification email to user: " + stringifyObject(userData));
 	const emailOptions = {
 		"template": "verification",
 		"subject": "Email Verification",
@@ -24,7 +24,10 @@ const sendVerificationEmail = (userData) => {
 		"from": "registration",
 	};
 
-	log(`Sending verification email with the options: ${emailOptions}`);
+	log(
+		"Sending verification email with the options: " +
+			stringifyObject(emailOptions)
+	);
 
 	return sendEmail(userData.email, emailOptions);
 };
