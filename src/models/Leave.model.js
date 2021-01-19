@@ -31,8 +31,8 @@ const getMinEndDate = function () {
  *
  * @returns {boolean} Whether or not the provided employee number corresponds to an existing user
  */
-const checkEmployeeNumber = function () {
-	return !!User.getFromEmployeeNumber(this.user);
+const checkEmployeeNumber = async function () {
+	return !!(await User.getFromEmployeeNumber(this.user));
 };
 
 const statusRangeMsg =
