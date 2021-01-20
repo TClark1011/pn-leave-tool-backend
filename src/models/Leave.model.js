@@ -2,11 +2,19 @@ import mongoose, { Schema, model } from "mongoose";
 import mongooseConnect from "../utils/mongooseConnect";
 import User from "./User.model";
 import { addDays, subDays } from "date-fns";
-import {
-	leaveStartMinOffset,
-	leaveDeleteParameters,
-} from "../constants/systemParameters";
 import { log } from "../middleware/loggingMiddleware";
+
+import { leaveDeleteParameters } from "../constants/systemParameters";
+import {
+	leaveLength,
+	leaveStartMinOffset,
+} from "pn-leave-tool-common/leaveParams";
+
+// import {
+// 	leaveLength,
+// 	leaveStartMinOffset,
+// 	leaveDeleteParameters,
+// } from "../constants/systemParameters";
 
 mongooseConnect(mongoose, "Leave");
 
@@ -23,7 +31,11 @@ const getMinStartDate = () => addDays(new Date(), leaveStartMinOffset);
  * @returns {Date} The earliest date that new leave can start
  */
 const getMinEndDate = function () {
-	return addDays(this.dates.start, 1);
+	return addDays(this.dates.start, leaveLength.min);
+};
+
+const getMaxEndDate = function () {
+	return addDays(this.dates.start, leaveLength.max);
 };
 
 /**
@@ -47,6 +59,7 @@ const leaveSchema = new Schema({
 			"type": Date,
 			"required": true,
 			"min": getMinEndDate,
+			"max": getMaxEndDate,
 		},
 	},
 	"user": {
