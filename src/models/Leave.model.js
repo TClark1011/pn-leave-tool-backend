@@ -4,17 +4,17 @@ import User from "./User.model";
 import { addDays, subDays } from "date-fns";
 import { log } from "../middleware/loggingMiddleware";
 
-// import { leaveDeleteParameters } from "../constants/systemParameters";
-// import {
-// 	leaveLength,
-// 	leaveStartMinOffset,
-// } from "pn-leave-tool-common/leaveParams";
-
+import { leaveDeleteParameters } from "../constants/systemParameters";
 import {
 	leaveLength,
 	leaveStartMinOffset,
-	leaveDeleteParameters,
-} from "../constants/systemParameters";
+} from "pn-leave-tool-common";
+
+// import {
+// 	leaveLength,
+// 	leaveStartMinOffset,
+// 	leaveDeleteParameters,
+// } from "../constants/systemParameters";
 
 mongooseConnect(mongoose, "Leave");
 

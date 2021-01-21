@@ -4,7 +4,7 @@ import {
 	defaultPasswordResetKeyExpires,
 } from "../constants/defaultValues";
 import mongooseConnect from "../utils/mongooseConnect";
-import { emailRegex } from "pn-leave-tool-common/validation";
+import { emailRegex } from "pn-leave-tool-common";
 
 mongooseConnect(mongoose, "User");
 
