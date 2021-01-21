@@ -21,13 +21,16 @@ const forgotPasswordHandler = async (req, res) => {
 	foundUser.save();
 
 	sendEmail(foundUser.email, {
-		"subject": "Forgot Password",
+		"subject": "Reset Password",
 		"template": "forgotPassword",
 		"context": {
 			"name": foundUser.name,
+			"date": foundUser.date_created,
+			"employee_number": foundUser.employee_number,
 			"link": `${process.env.FRONTEND_URL}/resetPassword/${key}`,
 		},
-		"from": "support",
+		// "from": "support",
+		//? Removing 'from' for now since using 'support' alias field causes email to be categorised as spam
 	}).then(() => {
 		res.status(200).json(
 			getSuccessResponse({
