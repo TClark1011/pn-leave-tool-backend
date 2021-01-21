@@ -10,18 +10,33 @@ const baseFormat = winston.format.combine(
 	logFormat
 );
 
+const customLevels = {
+	"levels": { "error": 0, "warn": 1, "info": 2, "verbose": 3, "debug": 4, "cleanup": 5 },
+	"colors": {
+		"error": "red",
+		"warn": "yellow",
+		"info": "green",
+		"cleanup": "blue",
+	},
+};
+
 const winstonInstance = createLogger({
 	"transports": [
 		new winston.transports.File({
 			"filename": "logs.log",
 			"format": baseFormat,
+			"level": "cleanup",
 		}),
 		new winston.transports.Console({
 			"format": winston.format.combine(winston.format.colorize(), baseFormat),
 			"colorize": true,
+			"level": "cleanup",
 		}),
 	],
+	"levels": customLevels.levels,
 });
+
+winston.addColors(customLevels.colors);
 
 const logger = expressLogger({
 	winstonInstance,
