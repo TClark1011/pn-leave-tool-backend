@@ -31,6 +31,7 @@ const forgotPasswordHandler = async (req, res) => {
 		},
 		// "from": "support",
 		//? Removing 'from' for now since using 'support' alias field causes email to be categorised as spam
+		//FIXME: Get email working with support alias
 	}).then(() => {
 		res.status(200).json(
 			getSuccessResponse({
