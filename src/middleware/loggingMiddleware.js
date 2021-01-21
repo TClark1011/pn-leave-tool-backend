@@ -11,11 +11,12 @@ const baseFormat = winston.format.combine(
 );
 
 const customLevels = {
-	"levels": { "error": 0, "warn": 1, "info": 2, "verbose": 3, "debug": 4, "cleanup": 5 },
+	"levels": { "error": 0, "warn": 1, "info": 2, "verbose": 3, "cleanup": 4, "debug": 5 },
 	"colors": {
 		"error": "red",
 		"warn": "yellow",
 		"info": "green",
+		"debug": "magenta",
 		"cleanup": "blue",
 	},
 };
@@ -30,7 +31,7 @@ const winstonInstance = createLogger({
 		new winston.transports.Console({
 			"format": winston.format.combine(winston.format.colorize(), baseFormat),
 			"colorize": true,
-			"level": "cleanup",
+			"level": "debug",
 		}),
 	],
 	"levels": customLevels.levels,
