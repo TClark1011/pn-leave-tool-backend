@@ -36,15 +36,17 @@ const emailHash = md5(testEmail);
  *
  * @returns {Promise} Promise for a get request to fetch the inbox
  */
-const fetchTestInbox = () =>
-	axios({
-		"method": "GET",
-		"url": `https://privatix-temp-mail-v1.p.rapidapi.com/request/mail/id/${emailHash}/`,
-		"headers": {
-			"x-rapidapi-key": process.env.EMAIL_TESTING_API_KEY,
-			"x-rapidapi-host": "privatix-temp-mail-v1.p.rapidapi.com",
-		},
-	}).catch((err) => err);
+const fetchTestInbox = async () =>
+	(
+		await axios({
+			"method": "GET",
+			"url": `https://privatix-temp-mail-v1.p.rapidapi.com/request/mail/id/${emailHash}/`,
+			"headers": {
+				"x-rapidapi-key": process.env.EMAIL_TESTING_API_KEY,
+				"x-rapidapi-host": "privatix-temp-mail-v1.p.rapidapi.com",
+			},
+		}).catch((err) => err)
+	).data;
 
 /**
  * Takes an object with "employee_number" and "password" fields and adds the extra fields required
@@ -97,22 +99,24 @@ afterAll(async () => {
 const rootUrl = "/users";
 
 describe("Can register new account and login", () => {
-	it("Registers successfully with valid input", async (done) => {
-		await api
+	it("Registers successfully with valid input", (done) => {
+		api
 			.post(`${rootUrl}/register`)
 			.send(extendRegCredentials(testCredentials))
 			.expect("Content-Type", /json/)
-			.expect(200);
+			.expect(200)
+			.end(done);
+	});
+
+	it("Sent the verification email", async (done) => {
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+		const newInboxState = await fetchTestInbox();
+		expect(startingInboxState).not.toEqual(newInboxState);
 		done();
 	});
 
-	// it("Sent the verification email", async (done) => {
-	// 	const newInboxState = await fetchTestInbox();
-	// 	expect(startingInboxState).not.toEqual(newInboxState);
-	// 	done();
-	// });
-
 	it("Can resend the verification email", async (done) => {
+		await new Promise((resolve) => setTimeout(resolve, 1000));
 		const preResendInboxState = await fetchTestInbox();
 		await api.post(
 			`${rootUrl}/resendVerification/${testCredentials.employee_number}`
