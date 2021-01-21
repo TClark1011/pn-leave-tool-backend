@@ -34,7 +34,7 @@ const validFromValues = ["registration", "support"];
  * @returns {Promise} the promise to send the email
  */
 const sendEmail = (to, { subject, template, context, from }) => {
-	if (!validFromValues.includes(from)) {
+	if (from && !validFromValues.includes(from)) {
 		throw TypeError(
 			`'from' value must be one of the following: ${stringifyObject(
 				validFromValues
