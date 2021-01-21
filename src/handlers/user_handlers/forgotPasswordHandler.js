@@ -27,6 +27,7 @@ const forgotPasswordHandler = async (req, res) => {
 			"name": foundUser.name,
 			"link": `${process.env.FRONTEND_URL}/resetPassword/${key}`,
 		},
+		"from": "support",
 	}).then(() => {
 		res.status(200).json(
 			getSuccessResponse({
