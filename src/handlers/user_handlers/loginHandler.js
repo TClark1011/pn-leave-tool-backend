@@ -16,7 +16,8 @@ const loginHandler = async (req, res) => {
 
 	const foundUser = await User.getFromEmployeeNumber(employee_number);
 
-	const passwordMatch = await bcrypt.compare(password, foundUser.password);
+	const passwordMatch =
+		foundUser?.password && (await bcrypt.compare(password, foundUser.password));
 	const userIsAuthenticated = foundUser && passwordMatch;
 
 	if (!userIsAuthenticated) {
@@ -24,7 +25,6 @@ const loginHandler = async (req, res) => {
 		if (foundUser && !passwordMatch) {
 			log("Failed log in attempt due to incorrect password", "warn");
 		}
-		log("Unverified user attempted to log in", "warn");
 		res.status(401).json(
 			getErrorResponse({
 				"fullMessage": "Incorrect employee number or password",
