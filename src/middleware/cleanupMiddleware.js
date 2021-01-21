@@ -1,5 +1,4 @@
 import { differenceInMinutes, addHours } from "date-fns";
-import { Router } from "express";
 import User from "../models/User.model";
 import { log } from "./loggingMiddleware";
 
@@ -18,8 +17,6 @@ const deleteExpiredUsers = () => {
 
 var lastRan = addHours(Date.now(), -10);
 
-const cleanupMiddleware = Router();
-
 /**
  * Call all cleanup tasks
  *
@@ -27,13 +24,13 @@ const cleanupMiddleware = Router();
  * @param {object} res Response object
  * @param {Function} next Function to pass request to next route handler
  */
-cleanupMiddleware.all("/", (req, res, next) => {
+export const cleanupMiddleware = (req, res, next) => {
 	if (differenceInMinutes(Date.now(), lastRan) >= 60) {
 		log("Running cleanup tasks", "cleanup");
 		lastRan = Date.now();
 		deleteExpiredUsers();
 	}
 	next();
-});
+};
 
 export default cleanupMiddleware;

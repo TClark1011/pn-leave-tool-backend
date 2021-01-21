@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 ifNotTesting(() => app.use(logger));
-app.use("/*", cleanupMiddleware);
+app.use(cleanupMiddleware);
 
 app.use("/users", UserRouter);
 app.use("/leave", LeaveRouter);
