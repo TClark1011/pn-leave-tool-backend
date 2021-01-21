@@ -9,6 +9,7 @@ import { logErrors, sendErrorResponse } from "./middleware/errorMiddleware";
 import helmet from "helmet";
 import logger from "./middleware/loggingMiddleware";
 import ifNotTesting from "./utils/ifNotTesting";
+import cleanupMiddleware from "./middleware/cleanupMiddleware";
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.use(cors());
 app.use(express.json());
 
 ifNotTesting(() => app.use(logger));
+app.use("/*", cleanupMiddleware);
+
 app.use("/users", UserRouter);
 app.use("/leave", LeaveRouter);
 app.use("/depots", DepotRouter);
