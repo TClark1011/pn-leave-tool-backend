@@ -40,8 +40,6 @@ const forgotPasswordHandler = async (req, res) => {
 			})
 		);
 	});
-
-	//TODO: Write messages
 };
 
 export default forgotPasswordHandler;
