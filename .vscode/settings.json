@@ -4,5 +4,6 @@
 	"editor.formatOnSave": true,
 	"[javascript]": {
 		"editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-	}
+	},
+	"window.title": "backend"
 }
