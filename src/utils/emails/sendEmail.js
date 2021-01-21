@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import hbs from "nodemailer-express-handlebars";
 import { google } from "googleapis";
 import { log } from "../../middleware/loggingMiddleware";
+import { stringifyObject } from "../../middleware/loggingMiddleware";
 
 const OAuth2 = google.auth.OAuth2;
 
@@ -17,6 +18,11 @@ oauth2Client.setCredentials({ "refresh_token": process.env.EMAIL_REFRESH_TOKEN }
 const accessToken = oauth2Client.getAccessToken();
 
 /**
+ * Valid values that can be passed to the "from" parameter in the "sendEmail" function
+ */
+const validFromValues = ["registration", "support"];
+
+/**
  * Send an email
  *
  * @param {string} to The email address to which to send the email
@@ -28,6 +34,13 @@ const accessToken = oauth2Client.getAccessToken();
  * @returns {Promise} the promise to send the email
  */
 const sendEmail = (to, { subject, template, context, from }) => {
+	if (!validFromValues.includes(from)) {
+		throw TypeError(
+			`'from' value must be one of the following: ${stringifyObject(
+				validFromValues
+			)}`
+		);
+	}
 	const transporter = nodemailer.createTransport({
 		"service": "gmail",
 		"auth": {
