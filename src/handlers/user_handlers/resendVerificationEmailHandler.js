@@ -15,8 +15,6 @@ const resendVerificationEmailHandler = async (req, res) => {
 
 	const foundUser = await User.getFromEmployeeNumber(employee_number);
 
-	console.log("(resendVerificationEmailHandler) foundUser: ", foundUser);
-
 	if (!foundUser.verified) {
 		sendVerificationEmail(foundUser)
 			.then(() => {
