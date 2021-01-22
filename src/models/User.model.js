@@ -5,6 +5,7 @@ import {
 } from "../constants/defaultValues";
 import mongooseConnect from "../utils/mongooseConnect";
 import { emailRegex } from "pn-leave-tool-common";
+import { isTesting } from "../utils/ifNotTesting";
 
 mongooseConnect(mongoose, "User");
 
@@ -26,7 +27,7 @@ const userSchema = new Schema({
 		"validate": {
 			"validator": function () {
 				//? Has to be function and not lambda due to use of 'this'
-				return emailRegex.test(this.email);
+				return isTesting || emailRegex.test(this.email);
 			},
 			"message": "invalid email address",
 		},

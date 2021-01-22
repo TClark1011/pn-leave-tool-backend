@@ -9,16 +9,23 @@ import getAuthMiddleware from "../middleware/authMiddleware";
 import resendVerificationEmailHandler from "../handlers/user_handlers/resendVerificationEmailHandler";
 import forgotPasswordHandler from "../handlers/user_handlers/forgotPasswordHandler";
 import resetPasswordHandler from "../handlers/user_handlers/resetPasswordHandler";
-import { loginVal, registerVal } from "pn-leave-tool-common";
+import {
+	loginVal,
+	registerVal,
+	testingRegisterVal,
+} from "pn-leave-tool-common";
+import { isTesting } from "../utils/ifNotTesting";
 
 const UserRouter = Router();
+
+const regValidation = isTesting ? testingRegisterVal : registerVal;
 
 //# User Login
 UserRouter.post("/login", validationMiddleware(loginVal));
 UserRouter.post("/login", loginHandler);
 
 //# User Registration
-UserRouter.post("/register", validationMiddleware(registerVal));
+UserRouter.post("/register", validationMiddleware(regValidation));
 UserRouter.post("/register", registerHandler);
 
 UserRouter.post(
