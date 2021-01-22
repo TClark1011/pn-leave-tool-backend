@@ -8,7 +8,8 @@
 		"start:dev": "nodemon --exec babel-node src/index.js",
 		"test": "jest",
 		"test:dev": "jest --watch",
-		"build": "babel src -d build"
+		"build": "babel src -d build",
+		"update-common": "npm install pn-leave-tool-common@latest"
 	},
 	"keywords": [],
 	"author": "",
@@ -45,7 +46,7 @@
 		"mongoose": "^5.11.9",
 		"nodemailer": "^6.4.17",
 		"nodemailer-express-handlebars": "^4.0.0",
-		"pn-leave-tool-common": "^1.1.1",
+		"pn-leave-tool-common": "^1.2.0",
 		"random": "^2.2.0",
 		"regenerator-runtime": "^0.13.7",
 		"winston": "^3.3.3",
