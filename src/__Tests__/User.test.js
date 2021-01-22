@@ -121,6 +121,7 @@ describe("Can register new account and login", () => {
 		await api.post(
 			`${rootUrl}/resendVerification/${testCredentials.employee_number}`
 		);
+		await new Promise((resolve) => setTimeout(resolve, 1000));
 		const postResendInboxState = await fetchTestInbox();
 		expect(preResendInboxState).not.toEqual(postResendInboxState);
 		done();
