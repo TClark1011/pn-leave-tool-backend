@@ -56,8 +56,12 @@ export default logger;
  * @param {string} [level="info"] The level to tag to the log statement
  * @returns {loggerCall} Calls a winston logger, passing the provided parameters
  */
-export const log = (message, level = "info") =>
-	winstonInstance.log({ message, level });
+export const log = (message, level = "info") => {
+	if (!Object.keys(customLevels.levels).includes(level)) {
+		throw TypeError("log level must be one of the following: " + stringifyObject(level));
+	}
+	return winstonInstance.log({ message, level });
+};
 
 /**
  * Convert a JSON object into a string so it can be logged
