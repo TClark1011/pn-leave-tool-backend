@@ -12,7 +12,6 @@ const oauth2Client = new OAuth2(
 	process.env.EMAIL_OAUTH_CLIENT_SECRET,
 	"https://developers.google.com/oauthplayground"
 );
-
 oauth2Client.setCredentials({ "refresh_token": process.env.EMAIL_REFRESH_TOKEN });
 
 const accessToken = oauth2Client.getAccessToken();
