@@ -71,7 +71,7 @@ const registerHandler = async (req, res) => {
 			);
 			log(
 				"An error occurred attempting to send verification email. " + err,
-				"err"
+				"error"
 			);
 		});
 	//TODO: Write messages
