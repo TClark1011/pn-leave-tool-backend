@@ -14,11 +14,11 @@ import {
 	registerVal,
 	testingRegisterVal,
 } from "pn-leave-tool-common";
-import { isTesting } from "../utils/ifNotTesting";
+import { validateEmails } from "../constants/env";
 
 const UserRouter = Router();
 
-const regValidation = isTesting ? testingRegisterVal : registerVal;
+const regValidation = validateEmails ? registerVal : testingRegisterVal;
 
 //# User Login
 UserRouter.post("/login", validationMiddleware(loginVal));

@@ -49,6 +49,7 @@
 		"pn-leave-tool-common": "^1.2.2",
 		"random": "^2.2.0",
 		"regenerator-runtime": "^0.13.7",
+		"to-boolean": "^1.0.0",
 		"winston": "^3.3.3",
 		"yup": "^0.32.8"
 	},
