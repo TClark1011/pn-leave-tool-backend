@@ -5,7 +5,6 @@ import {
 } from "../constants/defaultValues";
 import mongooseConnect from "../utils/mongooseConnect";
 import { emailRegex } from "pn-leave-tool-common";
-import { isTesting } from "../utils/ifNotTesting";
 import { validateEmails } from "../constants/env";
 
 mongooseConnect(mongoose, "User");
