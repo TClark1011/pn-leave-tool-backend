@@ -9,8 +9,8 @@ mongooseConnect(mongoose, "Depot");
  * @property {string} name The name of the depot
  * @property {number} drivers The number of drivers assigned to the depot
  * @property {boolean} [hidden=false] Whether or not the depot is hidden.
- * Hidden depots will only appear in the app if the environment variable
- * "NODE_ENV" is set to "development".
+ * Hidden depots will only appear in the frontend app if it is in a
+ * development environment (determined by the "NODE_ENV" environment variable)
  */
 const depotSchema = new mongoose.Schema({
 	"name": { "type": String, "required": true, "unique": true },
