@@ -96,6 +96,6 @@ leaveSchema.pre("find", async () => {
 	}
 });
 
-const Leave = model("leave", leaveSchema);
+const Leave = model("leave_request", leaveSchema);
 
 export default Leave;
