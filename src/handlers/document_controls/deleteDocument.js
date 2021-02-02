@@ -28,7 +28,7 @@ const deleteDocument = (Model) =>
 				})
 			);
 		} catch (err) {
-			throw Error(errorMsg("create a document"));
+			throw Error(errorMsg("delete document(s)"));
 		}
 	};
 
