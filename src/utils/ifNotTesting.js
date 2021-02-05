@@ -1,4 +1,4 @@
-export const isTesting = process.env.NODE_ENV === "test";
+import { isTesting } from "../constants/env";
 
 /**
  * Runs provided function if the NODE_ENV environment variable is not set to test

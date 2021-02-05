@@ -1,4 +1,5 @@
 import express from "express";
+import { OPERATOR_ACCESS_KEY } from "../constants/env";
 import decodeToken from "../utils/decodeToken";
 import getErrorResponse from "../utils/responses/getErrorResponse";
 import getServerError from "../utils/responses/getErrorResponse";
@@ -21,7 +22,7 @@ const getAuthMiddleware = (type) => {
 			case "operator_access_key":
 				if (
 					req.headers.operator_access_key &&
-					req.headers.operator_access_key === process.env.OPERATOR_ACCESS_KEY
+					req.headers.operator_access_key === OPERATOR_ACCESS_KEY
 				) {
 					return next();
 				}

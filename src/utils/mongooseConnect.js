@@ -1,3 +1,4 @@
+import { MONGO_URI } from "../constants/env";
 import { log } from "../middleware/loggingMiddleware";
 
 /**
@@ -9,7 +10,7 @@ import { log } from "../middleware/loggingMiddleware";
 const mongooseConnect = (mongoose, name) => {
 	mongoose.set("useFindAndModify", false);
 	mongoose
-		.connect(process.env.MONGO_URI, {
+		.connect(MONGO_URI, {
 			"useNewUrlParser": true,
 			"useUnifiedTopology": true,
 		})

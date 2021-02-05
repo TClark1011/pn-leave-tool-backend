@@ -1,3 +1,4 @@
+import { FRONTEND_URL } from "../../constants/env";
 import User from "../../models/User.model";
 import decodeToken from "../../utils/decodeToken";
 
@@ -16,10 +17,10 @@ const verifyHandler = async (req, res) => {
 			foundUser.verified = true;
 			foundUser.save();
 		}
-		res.status(200).redirect(process.env.FRONTEND_URL + "/login?verified");
+		res.status(200).redirect(FRONTEND_URL + "/login?verified");
 		return;
 	}
-	res.redirect(process.env.FRONTEND_URL + "/login?redir");
+	res.redirect(FRONTEND_URL + "/login?redir");
 };
 
 export default verifyHandler;

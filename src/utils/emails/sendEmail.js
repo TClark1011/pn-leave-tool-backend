@@ -4,15 +4,24 @@ import hbs from "nodemailer-express-handlebars";
 import { google } from "googleapis";
 import { log } from "../../middleware/loggingMiddleware";
 import { stringifyObject } from "../../middleware/loggingMiddleware";
+import {
+	BACKEND_URL,
+	EMAIL_ADDRESS,
+	EMAIL_OAUTH_CLIENT_SECRET,
+	EMAIL_OAUTH_ID,
+	EMAIL_REFRESH_TOKEN,
+	EMAIL_USER,
+	SUPPORT_EMAIL,
+} from "../../constants/env";
 
 const OAuth2 = google.auth.OAuth2;
 
 const oauth2Client = new OAuth2(
-	process.env.EMAIL_OAUTH_ID,
-	process.env.EMAIL_OAUTH_CLIENT_SECRET,
+	EMAIL_OAUTH_ID,
+	EMAIL_OAUTH_CLIENT_SECRET,
 	"https://developers.google.com/oauthplayground"
 );
-oauth2Client.setCredentials({ "refresh_token": process.env.EMAIL_REFRESH_TOKEN });
+oauth2Client.setCredentials({ "refresh_token": EMAIL_REFRESH_TOKEN });
 
 const accessToken = oauth2Client.getAccessToken();
 
@@ -44,11 +53,11 @@ const sendEmail = (to, { subject, template, context, from }) => {
 		"service": "gmail",
 		"auth": {
 			"type": "OAuth2",
-			"clientId": process.env.EMAIL_OAUTH_ID,
-			"clientSecret": process.env.EMAIL_OAUTH_CLIENT_SECRET,
-			"refreshToken": process.env.EMAIL_REFRESH_TOKEN,
+			"clientId": EMAIL_OAUTH_ID,
+			"clientSecret": EMAIL_OAUTH_CLIENT_SECRET,
+			"refreshToken": EMAIL_REFRESH_TOKEN,
 			accessToken,
-			"user": process.env.EMAIL_USER,
+			"user": EMAIL_USER,
 		},
 	});
 
@@ -66,7 +75,7 @@ const sendEmail = (to, { subject, template, context, from }) => {
 		context.date = format(context.date, "hh:mm - dd/MM/yyyy");
 	}
 
-	const fromEmail = from ? `${from}@pnleave.com` : process.env.EMAIL_ADDRESS;
+	const fromEmail = from ? `${from}@pnleave.com` : EMAIL_ADDRESS;
 
 	log(`Sending email from ${fromEmail} to ${to}`);
 
@@ -77,8 +86,8 @@ const sendEmail = (to, { subject, template, context, from }) => {
 		template,
 		"context": {
 			...context,
-			"url": `${process.env.BACKEND_URL}`,
-			"supportEmail": process.env.SUPPORT_EMAIL,
+			"url": `${BACKEND_URL}`,
+			"supportEmail": SUPPORT_EMAIL,
 		},
 	});
 };

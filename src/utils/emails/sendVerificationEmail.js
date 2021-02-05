@@ -1,3 +1,4 @@
+import { FRONTEND_URL } from "../../constants/env";
 import { log, stringifyObject } from "../../middleware/loggingMiddleware";
 import getToken from "../getToken";
 import sendEmail from "./sendEmail";
@@ -19,7 +20,7 @@ const sendVerificationEmail = (userData) => {
 			employee_number,
 			"date": new Date(date),
 			"token": getToken(userData.employee_number),
-			"url": process.env.FRONTEND_URL,
+			"url": FRONTEND_URL,
 		},
 		"from": "registration",
 	};

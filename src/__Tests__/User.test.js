@@ -6,6 +6,7 @@ import User from "../models/User.model";
 import Depot from "../models/Depot.model";
 import md5 from "md5";
 import axios from "axios";
+import { EMAIL_TESTING_API_KEY, FRONTEND_URL } from "../constants/env";
 
 let app;
 let api;
@@ -42,7 +43,7 @@ const fetchTestInbox = async () =>
 			"method": "GET",
 			"url": `https://privatix-temp-mail-v1.p.rapidapi.com/request/mail/id/${emailHash}/`,
 			"headers": {
-				"x-rapidapi-key": process.env.EMAIL_TESTING_API_KEY,
+				"x-rapidapi-key": EMAIL_TESTING_API_KEY,
 				"x-rapidapi-host": "privatix-temp-mail-v1.p.rapidapi.com",
 			},
 		}).catch((err) => err)
@@ -132,7 +133,7 @@ describe("Can register new account and login", () => {
 		await api
 			.get(`${rootUrl}/verify/${getToken(testCredentials.employee_number)}`)
 			.expect(302)
-			.expect("Location", `${process.env.FRONTEND_URL}/login?verified`);
+			.expect("Location", `${FRONTEND_URL}/login?verified`);
 		done();
 	});
 

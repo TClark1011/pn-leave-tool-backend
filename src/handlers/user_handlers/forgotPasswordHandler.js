@@ -3,6 +3,7 @@ import crypto from "crypto";
 import { addHours } from "date-fns";
 import getSuccessResponse from "../../utils/responses/getSuccessResponse";
 import sendEmail from "../../utils/emails/sendEmail";
+import { FRONTEND_URL } from "../../constants/env";
 
 /**
  * Handle request to start the password reset process
@@ -27,7 +28,7 @@ const forgotPasswordHandler = async (req, res) => {
 			"name": foundUser.name,
 			"date": foundUser.date_created,
 			"employee_number": foundUser.employee_number,
-			"link": `${process.env.FRONTEND_URL}/resetPassword/${key}`,
+			"link": `${FRONTEND_URL}/resetPassword/${key}`,
 		},
 		// "from": "support",
 		//? Removing 'from' for now since using 'support' alias field causes email to be categorised as spam
