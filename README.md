@@ -40,3 +40,17 @@ This section details the scripts defined in `package.json` that can be executed 
 - `test:dev` - Run the server in watch mode, causing it to rerun tests when changes are detected.
 - `build` - Build the program (goes into the 'build' folder).
 - `update-common` - Install the latest version of the `pn-leave-tool-common` npm package.
+
+## Environment Variables
+
+The following environment variables are stored in `.env` files which are not tracked by git. Unless specified as optional, each environment variable must be set for every environment this project is deployed in. Environment variables are usually set by either creating a `.env` file in the root directory of the environment, or in the case of certain hosting providers such as 'Vercel' or 'Heroku', through a provided user interface.
+
+All environment variables are exported from `src/constants/env.js`. This allows for a more convenient syntax as well as env variable mocking during tests.
+
+### Misc
+
+- `PORT` - The port the server will run on. Most hosting providers will automatically provide this and will not require it to be set manually.
+- `MONGO_URI` - The connection string used to connect to the database.
+- `JWT_SECRET` - The string used to generate web tokens.
+
+###
