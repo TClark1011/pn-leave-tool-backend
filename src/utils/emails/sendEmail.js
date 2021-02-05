@@ -21,7 +21,9 @@ const oauth2Client = new OAuth2(
 	EMAIL_OAUTH_CLIENT_SECRET,
 	"https://developers.google.com/oauthplayground"
 );
+
 oauth2Client.setCredentials({ "refresh_token": EMAIL_REFRESH_TOKEN });
+//? Redo authentication setup following this: https://developers.google.com/gmail/api/quickstart/nodejs
 
 const accessToken = oauth2Client.getAccessToken();
 
