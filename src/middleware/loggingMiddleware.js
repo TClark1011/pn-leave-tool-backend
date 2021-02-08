@@ -11,13 +11,13 @@ const baseFormat = winston.format.combine(
 );
 
 const customLevels = {
-	"levels": { "error": 0, "warn": 1, "info": 2, "verbose": 3, "cleanup": 4, "debug": 5 },
+	"levels": { "error": 0, "warn": 1, "info": 2, "cleanup": 3, "debug": 4 },
 	"colors": {
 		"error": "red",
 		"warn": "yellow",
 		"info": "green",
-		"debug": "magenta",
 		"cleanup": "blue",
+		"debug": "magenta",
 	},
 };
 
@@ -58,7 +58,9 @@ export default logger;
  */
 export const log = (message, level = "info") => {
 	if (!Object.keys(customLevels.levels).includes(level)) {
-		throw TypeError("log level must be one of the following: " + stringifyObject(level));
+		throw TypeError(
+			"log level must be one of the following: " + stringifyObject(level)
+		);
 	}
 	return winstonInstance.log({ message, level });
 };
