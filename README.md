@@ -87,3 +87,14 @@ This project uses a custom logging function that uses winston, both for automati
 5. `debug `
 
 All levels will be logged into log files except for 'Debug', which will only appear in the console while the server is running.
+
+## Linting
+
+This project uses `eslint` and `prettier` to enforce a specific code style. The most notable linting rules that are used are:
+
+- **Quotes: ** Must use double quotes. Exceptions to this rule include uses of backticks for template literals with included variables such as `` `Hello ${name}` ``, and when using single quotes to allow the use of double quotes in a string such as `'I said "Hello" to you'`.
+- **Semicolon: ** Must always use semicolons at the end of lines.
+- **Indentation: ** Must use tabs for indentation.
+- **Quote Props: ** Property keys in objects must always be wrapped in quotes, except when using the shorthand to pass a variable as both the key and property value.
+- **Require JSDoc: ** All functions must include a JSDoc comment to document it. [JSDoc](https://jsdoc.app/) documentation.
+- **Prefer Arrow Functions: ** You must use arrow functions (eg; `const func = (param) => {...};`). The `function` syntax can be used if the `this` keyword is used in the function body eg; `function func(param) {return this.result};`
