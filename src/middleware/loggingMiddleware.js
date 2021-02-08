@@ -59,7 +59,8 @@ export default logger;
 export const log = (message, level = "info") => {
 	if (!Object.keys(customLevels.levels).includes(level)) {
 		throw TypeError(
-			"log level must be one of the following: " + stringifyObject(level)
+			"log level must be one of the following: " +
+				stringifyObject(Object.keys(customLevels.levels))
 		);
 	}
 	return winstonInstance.log({ message, level });
