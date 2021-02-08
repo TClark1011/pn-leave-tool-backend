@@ -98,3 +98,12 @@ This project uses `eslint` and `prettier` to enforce a specific code style. The 
 - **Quote Props: ** Property keys in objects must always be wrapped in quotes, except when using the shorthand to pass a variable as both the key and property value.
 - **Require JSDoc: ** All functions must include a JSDoc comment to document it. [JSDoc](https://jsdoc.app/) documentation.
 - **Prefer Arrow Functions: ** You must use arrow functions (eg; `const func = (param) => {...};`). The `function` syntax can be used if the `this` keyword is used in the function body eg; `function func(param) {return this.result};`
+
+## Cleanup
+
+Whenever a request is received, a 'cleanup' function is executed asynchronously. This cleanup functions deletes items from the database that meet certain criteria to be considered irrelevant and will no longer to either be required for the application to correctly operate or to be requested by a user. The deletion operations along with their corresponding irrelevancy criteria are as follows:
+
+- Delete Unverified Users - User objects that were created but have remained unverified for one hour.
+- Delete Expired Leave Requests - Leave requests with end dates that passed at least 1 year ago.
+
+The cleanup function will be executed at most once per hour. If cleanup had been run within an hour when a request is received then cleanup is not executed.
