@@ -47,10 +47,21 @@ The following environment variables are stored in `.env` files which are not tra
 
 All environment variables are exported from `src/constants/env.js`. This allows for a more convenient syntax as well as env variable mocking during tests.
 
-### Misc
+### Misc.
 
 - `PORT` - The port the server will run on. Most hosting providers will automatically provide this and will not require it to be set manually.
 - `MONGO_URI` - The connection string used to connect to the database.
 - `JWT_SECRET` - The string used to generate web tokens.
+	- REACT_APP_BACKEND_DEV_PORT.
 
-###
+## Logging
+
+This project uses a custom logging function that uses winston, both for automatic logging requests and for manual console logging. In any situation where you would normally use 'console.log', you should instead use the 'log' function exported from `src/middleware/loggingMiddleware`.  This custom logging function takes a message parameter and an optional "level" parameter which determines how the message will be tagged when printed to the console and whether or not the message will also appear in log files. The levels are as follows:
+
+1. `error`
+2. `warn`
+3. `info` (default)
+4. `cleanup `
+5. `debug `
+
+All levels will be logged into log files except for 'Debug', which will only appear in the console while the server is running.
