@@ -41,6 +41,55 @@ This section details the scripts defined in `package.json` that can be executed 
 - `build` - Build the program (goes into the 'build' folder).
 - `update-common` - Install the latest version of the `pn-leave-tool-common` npm package.
 
+## Routes
+
+This section describes all the request routes for the PN Leave Tool API. All router root URLs are relevant to the root URL of the server. All request Addresses are relevant to the root URL of the corresponding router. URL parameters are denoted by `:param`. Eg; `/objects/delete/:id` is a dynamic url where an object id should be substituted into the string, replacing `:id`. For more information on route authentication, see the Authentication section in this file. The 'Request Body' column describes the expected structure of requests that must be adhered too.
+
+### Depots
+
+**File: **`src/routes/Depot.router.js`
+
+**Root URL: ** `/depots`
+
+| Function           | Address | Request Type | Authentication      | Request Body            |
+| ------------------ | ------- | ------------ | ------------------- | ----------------------- |
+| Fetch all depots   | /       | GET          | None                | None                    |
+| Create a new depot | /       | POST         | Operator Access Key | See 'Depot' data object |
+| Delete a depot     | /:id    | DELETE       | Operator Access Key | None                    |
+
+### Leave Requests
+
+**File: **`src/routes/Leave.router.js`
+
+**Root URL: ** `/leave`
+
+| Function                                     | Address  | Request Type | Authentication      | Request Body                   |
+| -------------------------------------------- | -------- | ------------ | ------------------- | ------------------------------ |
+| Request annual leave availability estimation | /request | POST         | Login               | See 'Leave' data object        |
+| Submit CSV data exported from LMS            | /lmsData | POST         | Operator Access Key | CSV LMS data converted to JSON |
+
+### User
+
+**File: **`src/routes/User.router.js`
+
+**Root URL: ** `/users`
+
+| Function                               | Address                             | Request Type | Authentication | Request Body                      |
+| -------------------------------------- | ----------------------------------- | ------------ | -------------- | --------------------------------- |
+| Attempt to login                       | /login                              | POST         | None           | - employee_number<br />- password |
+| Register a new user account            | /register                           | POST         | None           | See 'User' data object            |
+| Resend registration verification email | /resendVerification/:employeeNumber | POST         | None           | None                              |
+| Complete registration verification     | /verify/:verification_token*        | GET          | None           | None                              |
+| Update user details                    | /update                             | POST         | Login          | See 'User' data object**          |
+| Begin the password change process      | /forgotPassword/:employee_number    | POST         | None           | None                              |
+| Complete the password change process   | /resetPassword/:reset_key***        | POST         | None           | - password                        |
+
+*A link to the generated route url with the verification token included is contained in the verification email that is sent during the registration process
+**Only the 'depot' and 'name' fields from the provided 'User' object will be used when updating user information
+\*\*\*The password reset key is contained in the email that is sent after the 'forgotPassword' request is received
+
+** **
+
 ## Environment Variables
 
 The following environment variables are stored in `.env` files which are not tracked by git. Unless specified as optional, each environment variable must be set for every environment this project is deployed in. Environment variables are usually set by either creating a `.env` file in the root directory of the environment, or in the case of certain hosting providers such as 'Vercel' or 'Heroku', through a provided user interface.
@@ -71,22 +120,7 @@ All environment variables are exported from `src/constants/env.js`. This allows 
 ### Misc.
 
 - `PORT` - The port the server will run on. Most hosting providers will automatically provide this and will not require it to be set manually.
-
 - `MONGO_URI` - The connection string used to connect to the database.
-
-	
-
-## Logging
-
-This project uses a custom logging function that uses winston, both for automatic logging requests and for manual console logging. In any situation where you would normally use 'console.log', you should instead use the 'log' function exported from `src/middleware/loggingMiddleware`.  This custom logging function takes a message parameter and an optional "level" parameter which determines how the message will be tagged when printed to the console and whether or not the message will also appear in log files. The levels are as follows:
-
-1. `error`
-2. `warn`
-3. `info` (default)
-4. `cleanup `
-5. `debug `
-
-All levels will be logged into log files except for 'Debug', which will only appear in the console while the server is running.
 
 ## Linting
 
@@ -99,7 +133,23 @@ This project uses `eslint` and `prettier` to enforce a specific code style. The 
 - **Require JSDoc: ** All functions must include a JSDoc comment to document it. [JSDoc](https://jsdoc.app/) documentation.
 - **Prefer Arrow Functions: ** You must use arrow functions (eg; `const func = (param) => {...};`). The `function` syntax can be used if the `this` keyword is used in the function body eg; `function func(param) {return this.result};`
 
-## Cleanup
+## Miscellaneous Functionality
+
+This section describes miscellaneous aspects of the server's functionality.
+
+### Logging
+
+This project uses a custom logging function that uses winston, both for automatic logging requests and for manual console logging. In any situation where you would normally use 'console.log', you should instead use the 'log' function exported from `src/middleware/loggingMiddleware`.  This custom logging function takes a message parameter and an optional "level" parameter which determines how the message will be tagged when printed to the console and whether or not the message will also appear in log files. The levels are as follows:
+
+1. `error`
+2. `warn`
+3. `info` (default)
+4. `cleanup `
+5. `debug `
+
+All levels will be logged into log files except for 'Debug', which will only appear in the console while the server is running.
+
+### Cleanup
 
 Whenever a request is received, a 'cleanup' function is executed asynchronously. This cleanup functions deletes items from the database that meet certain criteria to be considered irrelevant and will no longer to either be required for the application to correctly operate or to be requested by a user. The deletion operations along with their corresponding irrelevancy criteria are as follows:
 
