@@ -1,7 +1,7 @@
 import { differenceInMinutes, addHours, addYears } from "date-fns";
 import User from "../models/User.model";
 import Leave from "../models/Leave.model";
-import { log } from "./loggingMiddleware";
+import { log, logError } from "./loggingMiddleware";
 
 /**
  * Deletes unverified accounts that have existed for longer than one hour
@@ -15,9 +15,7 @@ const deleteExpiredUsers = async () => {
 		.then((result) => {
 			log(`Deleted ${result.deletedCount} expired users`, "cleanup");
 		})
-		.catch((err) => {
-			log(err, "error");
-		});
+		.catch(logError);
 };
 
 /**
@@ -33,9 +31,7 @@ const deleteOldLeave = async () => {
 		.then((result) => {
 			log(`Deleted ${result.deletedCount} old leave requests`, "cleanup");
 		})
-		.catch((err) => {
-			log(err, "error");
-		});
+		.catch(logError);
 };
 
 var lastRan = addHours(Date.now(), -10);

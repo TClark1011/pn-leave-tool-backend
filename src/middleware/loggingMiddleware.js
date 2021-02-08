@@ -67,6 +67,15 @@ export const log = (message, level = "info") => {
 };
 
 /**
+ * A function that can be used to a '.catch' statement
+ * to log the error.
+ *
+ * @param {Error} err An error
+ * @returns {loggerCall} Calls winston logger to log error
+ */
+export const logError = (err) => log(err, "error");
+
+/**
  * Convert a JSON object into a string so it can be logged
  *
  * @param {object} object The object to stringify
