@@ -84,9 +84,9 @@ This section describes all the request routes for the PN Leave Tool API. All rou
 | Begin the password change process      | /forgotPassword/:employee_number    | POST         | None           | None                              |
 | Complete the password change process   | /resetPassword/:reset_key***        | POST         | None           | - password                        |
 
-*A link to the generated route url with the verification token included is contained in the verification email that is sent during the registration process
+*verification token included is contained in the verification email that is sent after a valid registration request is received
 **Only the 'depot' and 'name' fields from the provided 'User' object will be used when updating user information
-\*\*\*The password reset key is contained in the email that is sent after the 'forgotPassword' request is received
+\*\*\*The password reset key is contained in the email that is sent after the request to begin the password change process is received
 
 ** **
 
