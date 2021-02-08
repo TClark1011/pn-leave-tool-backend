@@ -47,12 +47,34 @@ The following environment variables are stored in `.env` files which are not tra
 
 All environment variables are exported from `src/constants/env.js`. This allows for a more convenient syntax as well as env variable mocking during tests.
 
+### Email
+
+- `EMAIL_ADDRESS` - The email address to be used to send out emails.
+- `EMAIL_USER` - The username of the email account used to send emails.
+- `EMAIL_OAUTH_ID` - Google 'OAuth' ID used to authenticate access to email.
+- `EMAIL_OAUTH_CLIENT_SECRET` - The 'OAuth' client secret.
+- `EMAIL_REFRESH_TOKEN` - The token that is used to generate 'OAuth' access keys.
+- `EMAIL_TESTING_API_KEY` - An API key for the API used to test email functionality.
+- `SUPPORT_EMAIl` - The email address to use when sending customer support related emails.
+- `VALIDATE_EMAIL` - Whether or not ("true"/"false") to validate email addresses during user registration. Defaults to "false".
+
+### Authentication
+
+- `JWT_SECRET` - The string used to generate web tokens.
+- `OPERATOR_ACCESS_KEY` - String that must be provided when planners are submitting roster CSV data.
+
+### Urls
+
+- `BACKEND_URL` - The root url of the API.
+- `FRONTENT_URL` - The root url of the frontend web application component of the PN Leave Tool.
+
 ### Misc.
 
 - `PORT` - The port the server will run on. Most hosting providers will automatically provide this and will not require it to be set manually.
+
 - `MONGO_URI` - The connection string used to connect to the database.
-- `JWT_SECRET` - The string used to generate web tokens.
-	- REACT_APP_BACKEND_DEV_PORT.
+
+	
 
 ## Logging
 
