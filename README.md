@@ -133,9 +133,75 @@ This project uses `eslint` and `prettier` to enforce a specific code style. The 
 - **Require JSDoc: ** All functions must include a JSDoc comment to document it. [JSDoc](https://jsdoc.app/) documentation.
 - **Prefer Arrow Functions: ** You must use arrow functions (eg; `const func = (param) => {...};`). The `function` syntax can be used if the `this` keyword is used in the function body eg; `function func(param) {return this.result};`
 
+## Database
+
+The database used to store data is a MongoDB database that is stored in a MongoDB Atlas cloud database.
+
+## Data Objects
+
+This section describes important data types and their corresponding fields. As well as the fields described, each data type also has special fields which are automatically provided by MongoDB. The most important of this is `_id`, which is a unique identifier.
+
+If a field does not have a default value then that field is required and cannot be left out when creating a new instance of that data type. If a default value is wrapped in square brackets ('[...]') that denotes that that field is a special field and should not be provided, if the value is provided it will be discarded by the server in favour of the stated default value. If a Field's type is prefixed with "!" that means that it is a 'unique' field, meaning all instances of the data type must have a unique value for this field.
+
+### Depot
+
+| Field   | Description                                                | Type    | Default Value |
+| ------- | ---------------------------------------------------------- | ------- | ------------- |
+| name    | The name of the depot.                                     | !String | N/A           |
+| drivers | The number of drivers assigned to the depot                | Number  | N/A           |
+| hidden  | Whether or not a depot should be hidden from the frontend* | Boolean | `false`       |
+
+\*If a depot is set to hidden, it means it will only appear in the frontend application in development environments. In production environments it will not be shown to users.
+
+### Leave
+
+| Field       | Description                                               | Type    | Default Value |
+| ----------- | --------------------------------------------------------- | ------- | ------------- |
+| dates       | ---                                                       | Object  | N/A           |
+| dates.start | The start date of the leave request                       | Date    | N/A           |
+| dates.end   | The end date of the leave request                         | Date    | N/A           |
+| user        | The employee number of the user making the request        | String* | N/A           |
+| status      | The current approval status of the request*               | Number  | N/A           |
+| depot       | The `objectId` of the depot the request is being made for | String  | N/A           |
+| submitted   | The time at which the request was submitted               | Date    | `Date.now()`  |
+
+\*-1 = Denied, 0 = Pending (not currently implemented), 1 = Approved
+
+### User
+
+| Field                                 | Description                                                  | Type    | Default Value     |
+| ------------------------------------- | ------------------------------------------------------------ | ------- | ----------------- |
+| employee_number                       | Employee Number                                              | !String | N/A               |
+| password                              | Password                                                     | String  | N/A               |
+| name                                  | The user's name                                              | String  | N/A               |
+| depot                                 | `objectId` corresponding to the depot to which the user is assigned. | String  | N/A               |
+| email                                 | The user's email address. May be required to be an official Pacific National Email. See the 'VALIDATE_EMAIL' [environment variable](##environment-variables) for how to enable/disable the enforcement of email validation. | String  | N/A               |
+| date_created                          | The date at which the user registered their account.         | Date    | [`Date.now()`]    |
+| verified                              | Whether or not the user has verified their account.          | Boolean | [`false`]         |
+| passwordReset                         | ---                                                          | Object  | N/A               |
+| passwordReset.isResettingPassword     | Whether or not the user is currently resetting their password | Boolean | [`false`]         |
+| passwordReset.resetPasswordKey        | The key that is used to verify the user's identity when they update their password | String  | [`""`]            |
+| passwordReset.resetPasswordKeyExpires | When the `resetPasswordKey` expires and can then no longer be used. | Date    | [`new Date(0)`]\* |
+
+\*This default value is only used because the field requires it be filled by some value. 
+
+### Roster Day
+
+This represents a single day in a roster. It tracks how many drivers are rostered off on that date.
+
+| Field         | Description                                               | Type   | Default Value |
+| ------------- | --------------------------------------------------------- | ------ | ------------- |
+| date          | The date this object represents                           | Date   | N/A           |
+| absentDrivers | The number of drivers rostered of on that date            | Number | `0`           |
+| depot         | The `objectId` of the depot the request is being made for | String | N/A           |
+
 ## Miscellaneous Functionality
 
 This section describes miscellaneous aspects of the server's functionality.
+
+### Leave Approval Estimation
+
+The way leave request approval estimation works on a basic level is by iterating over each day that in the time period for which a user has requested leave and checking that each and every day will still have the required workforce with the requesting employee being absent. 
 
 ### Logging
 
