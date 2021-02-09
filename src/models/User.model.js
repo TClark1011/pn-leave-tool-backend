@@ -7,6 +7,7 @@ import mongooseConnect from "../utils/mongooseConnect";
 import { emailRegex } from "pn-leave-tool-common";
 import { VALIDATE_EMAIL } from "../constants/env";
 import { log, stringifyObject } from "../middleware/loggingMiddleware";
+import { differenceInSeconds } from "date-fns";
 
 mongooseConnect(mongoose, "User");
 
@@ -62,16 +63,42 @@ userSchema.methods.getSanitised = function () {
  * 'date_created' upon creation to prevent them from
  * being set manually by clients.
  */
-userSchema.pre("save", () => {
+userSchema.pre("save", function () {
+	const received = JSON.parse(JSON.stringify(this));
 	if (this.isNew) {
 		this.verified = false;
-		this.date_created = Date.now();
+		this.date_created =
+			Math.abs(differenceInSeconds(Date.now(), this.date_created)) > 20
+				? Date.now()
+				: this.date_created;
+		//? Forcefully set date_created if their is a large difference between current time and provided value
+		//? This is because there may be a discrepancy of a few seconds caused by lag/processing time in the server
+		//? We only forcefully set the field if the difference is large, which would indicate the value was intentionally set by a client
 		this.passwordReset = {
 			"isResettingPassword": false,
 			"passwordResetKey": defaultPasswordResetKey,
 			"passwordResetKeyExpires": defaultPasswordResetKeyExpires,
 		};
-	}
+		const receivedSpecialFields = {
+			"verified": received.verified,
+			"date_created": received.date_created,
+			"passwordReset": received.passwordReset,
+		};
+		const fixedSpecialFields = {
+			"verified": this.verified,
+			"date_created": this.date_created,
+			"passwordReset": this.passwordReset,
+		};
+		for (const field of Object.keys(fixedSpecialFields)) {
+			const rec = JSON.stringify(receivedSpecialFields[field]);
+			const ex = JSON.stringify(fixedSpecialFields[field]);
+			if (ex !== rec) {
+				log(
+					`Detected inconsistency in special field '${field}', expected: '${ex}', received: '${rec}'. This is likely caused by a client intentionally attempting to set these fields to non-default values, which could be indicative of an attack!`,
+					"error"
+				);
+			}
+		}
 });
 
 const User = model("User", userSchema);
