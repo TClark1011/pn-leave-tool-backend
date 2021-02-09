@@ -1,10 +1,8 @@
 import mongoose, { Schema, model } from "mongoose";
 import mongooseConnect from "../utils/mongooseConnect";
 import User from "./User.model";
-import { addDays, subDays } from "date-fns";
-import { log } from "../middleware/loggingMiddleware";
+import { addDays } from "date-fns";
 
-import { leaveDeleteParameters } from "../constants/systemParameters";
 import { leaveLength, leaveStartMinOffset } from "pn-leave-tool-common";
 
 mongooseConnect(mongoose, "Leave");
@@ -71,29 +69,6 @@ const leaveSchema = new Schema({
 	},
 	"depot": { "type": mongoose.Schema.Types.ObjectId, "ref": "depot", "required": true },
 	"submitted": { "type": Date, "default": Date.now() },
-});
-
-/**
- * Delete old leave items whenever leave is fetched
- */
-leaveSchema.pre("find", async () => {
-	for (const status of ["denied", "allowed"]) {
-		log(`Deleting old ${status} leave items`);
-		await Leave.deleteMany({
-			"status": -1,
-			"submitted": { "$lt": subDays(new Date(), leaveDeleteParameters[status]) },
-		})
-			.then((result) => {
-				log(`${result.deletedCount} old denied leave requests were deleted`);
-			})
-			.catch((error) => {
-				log(
-					"There was an error while deleting old denied leave requests: " +
-						error,
-					"error"
-				);
-			});
-	}
 });
 
 const Leave = model("leave_request", leaveSchema);
