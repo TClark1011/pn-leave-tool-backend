@@ -43,7 +43,7 @@ This section details the scripts defined in `package.json` that can be executed 
 
 ## Routes
 
-This section describes all the request routes for the PN Leave Tool API. All router root URLs are relevant to the root URL of the server. All request Addresses are relevant to the root URL of the corresponding router. URL parameters are denoted by `:param`. Eg; `/objects/delete/:id` is a dynamic url where an object id should be substituted into the string, replacing `:id`. For more information on route authentication, see the Authentication section in this file. The 'Request Body' column describes the expected structure of requests that must be adhered too.
+This section describes all the request routes for the PN Leave Tool API. All router root URLs are relevant to the root URL of the server. All request Addresses are relevant to the root URL of the corresponding router. URL parameters are denoted by `:param`. Eg; `/objects/delete/:id` is a dynamic url where an object id should be substituted into the string, replacing `:id`. For more information on route authentication, see the Authentication section in this file. The 'Request Body' column describes the expected structure of request bodies.
 
 ### Depots
 
@@ -199,9 +199,25 @@ This represents a single day in a roster. It tracks how many drivers are rostere
 
 This section describes miscellaneous aspects of the server's functionality.
 
+### Babel
+
+This project uses babel to compile the compile the modern ES6 syntax to the more standard 'CommonJS' syntax that will be run in production.
+
 ### Leave Approval Estimation
 
-The way leave request approval estimation works on a basic level is by iterating over each day that in the time period for which a user has requested leave and checking that each and every day will still have the required workforce with the requesting employee being absent. 
+The way leave request approval estimation works on a basic level is by iterating over each day that in the time period for which a user has requested leave and checking that each and every day will still have the required workforce with the requesting employee being absent. If the roster would still be above the required workforce with the requesting driver absent for every day, then the leave is estimated to be approved, otherwise it is estimated to be false. When a request is estimated to be approved, that driver's absence is recorded in the database so it will be considered when other drivers request estimations.
+
+### Leave Requests VS LMS Data
+
+The way successful leave requests are recorded and the way data from LMS is handled is slightly different. When a leave request is processed and estimated to be approved, that user's absence is recorded in addition to the existing roster data. When LMS data is submitted, it overwrites any roster data that may have been recorded for the specified dates.
+
+### Email Testing
+
+In order to test the email sending functionality, we make use of the [Temp Mail API](https://rapidapi.com/Privatix/api/temp-mail) which allows to generate and check the status of temporary email inboxes during our tests. We test email sending functionality (as seen in the registration and password reset processes) by generating a new inbox before the tests and providing the address for that email to the registration/password reset tests and checking the state of the inbox to see if the emails were sent and received.
+
+### Email HTML
+
+To generate the HTML for our emails, we make use of handlebars HTML templates.
 
 ### Logging
 
