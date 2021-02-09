@@ -6,6 +6,7 @@ import {
 import mongooseConnect from "../utils/mongooseConnect";
 import { emailRegex } from "pn-leave-tool-common";
 import { VALIDATE_EMAIL } from "../constants/env";
+import { log, stringifyObject } from "../middleware/loggingMiddleware";
 
 mongooseConnect(mongoose, "User");
 
@@ -55,6 +56,23 @@ userSchema.methods.getSanitised = function () {
 	delete copy.__v;
 	return copy;
 };
+
+/**
+ * Forcefully set special fields such as 'verified' or
+ * 'date_created' upon creation to prevent them from
+ * being set manually by clients.
+ */
+userSchema.pre("save", () => {
+	if (this.isNew) {
+		this.verified = false;
+		this.date_created = Date.now();
+		this.passwordReset = {
+			"isResettingPassword": false,
+			"passwordResetKey": defaultPasswordResetKey,
+			"passwordResetKeyExpires": defaultPasswordResetKeyExpires,
+		};
+	}
+});
 
 const User = model("User", userSchema);
 
