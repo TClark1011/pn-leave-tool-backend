@@ -43,7 +43,7 @@ This section details the scripts defined in `package.json` that can be executed 
 
 ## Routes
 
-This section describes all the request routes for the PN Leave Tool API. All router root URLs are relevant to the root URL of the server. All request Addresses are relevant to the root URL of the corresponding router. URL parameters are denoted by `:param`. Eg; `/objects/delete/:id` is a dynamic url where an object id should be substituted into the string, replacing `:id`. For more information on route authentication, see the Authentication section in this file. The 'Request Body' column describes the expected structure of request bodies.
+This section describes all the request routes for the PN Leave Tool API. All router root URLs are relevant to the root URL of the server. All request Addresses are relevant to the root URL of the corresponding router. URL parameters are denoted by `:param`. Eg; `/objects/delete/:id` is a dynamic url where an object id should be substituted into the string, replacing `:id`. For more information on route authentication, see the [Authentication](##authentication) section in this file. The 'Request Body' column describes the expected structure of request bodies.
 
 ### Depots
 
@@ -194,6 +194,13 @@ This represents a single day in a roster. It tracks how many drivers are rostere
 | date          | The date this object represents                           | Date   | N/A           |
 | absentDrivers | The number of drivers rostered of on that date            | Number | `0`           |
 | depot         | The `objectId` of the depot the request is being made for | String | N/A           |
+
+## Authentication
+
+This section describes the two different methods of authentication used in the server
+
+- **Operator Access Key: ** When roster planners are submitting CSV data from the LMS, they must provide an access key.
+- **Login: **This method of authentication requires a JWT authentication token be provided by the client. The required token is provided by the server upon successful login.
 
 ## Adjustments
 
