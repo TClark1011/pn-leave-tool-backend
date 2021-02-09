@@ -6,7 +6,7 @@ import {
 import mongooseConnect from "../utils/mongooseConnect";
 import { emailRegex } from "pn-leave-tool-common";
 import { VALIDATE_EMAIL } from "../constants/env";
-import { log, stringifyObject } from "../middleware/loggingMiddleware";
+import { log } from "../middleware/loggingMiddleware";
 import { differenceInSeconds } from "date-fns";
 
 mongooseConnect(mongoose, "User");
@@ -99,6 +99,7 @@ userSchema.pre("save", function () {
 				);
 			}
 		}
+	}
 });
 
 const User = model("User", userSchema);
