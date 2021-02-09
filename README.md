@@ -10,7 +10,7 @@ The PN Leave Tool is split into 3 separate packages/repositories:
 
 - **[Frontend](https://github.com/TClark1011/pn-leave-tool):** Frontend web application
 - **[Backend](https://github.com/TClark1011/pn-leave-tool-backend):** Backend web server.
-- **[Common](https://github.com/TClark1011/pn-leave-tool-common):** Common code components that are used in both the frontend and backend codebases. Contains logic for form validation and parameters for estimating annual leave such as minimum required notice and minimum/maximum leave length.
+- **[Common](https://github.com/TClark1011/pn-leave-tool-common):** Common code components that are used in both the frontend and backend codebases. Contains logic for form validation and parameters for estimating annual leave such as minimum required notice and minimum/maximum leave length. This package is shared between the frontend and backend via [npm](https://www.npmjs.com/package/pn-leave-tool-common/).
 <!-- REPO URLS: Make sure to update this section if the name/ownership of the repos are ever changed. -->
 
 ## Get Started
@@ -194,6 +194,15 @@ This represents a single day in a roster. It tracks how many drivers are rostere
 | date          | The date this object represents                           | Date   | N/A           |
 | absentDrivers | The number of drivers rostered of on that date            | Number | `0`           |
 | depot         | The `objectId` of the depot the request is being made for | String | N/A           |
+
+## Adjustments
+
+This section will detail how to make adjustments to certain parameters within the application:
+
+- **Set Email Validation: **To enable/disable validation that enforces all user email addresses be official PN email accounts, you must set the `VALIDATE_EMAIL` to either `true` for `false` depending on whether or not you want email addresses .
+- **Hosting:** Deploying this project will not require many special steps and will largely be the same as deploying any other project to a hosting provider. However, when doing so make sure to update the `BACKEND_URL` AND `FRONTEND_URL` environment variables when you do so, along with the `REACT_APP_BACKEND_URL` in the frontend application.
+- **Operator Access Key: ** To change the operator access key that must be provided by roster planners when uploading CSV data pulled from the LMS, change the `OPERATOR_ACCESS_KEY` environment variable.
+- **Leave Parameters: **To adjust the minimum/maximum length of annual leave or the minimum required notice a driver must provide before taking leave, you must first clone the [repository containing the common components](https://github.com/TClark1011/pn-leave-tool-common) and navigate to the `src/leaveParams.js` file and make your changes. Save your changes and push them to the main branch. Run `npm version patch` in the command line, then run `npm publish`. Then, execute the the command `npm run update-common` in the frontend and backend codebases.
 
 ## Miscellaneous Functionality
 
