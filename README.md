@@ -37,7 +37,7 @@ This section details the scripts defined in `package.json` that can be executed 
 - `start` - Run the `index.js` file within the `build/` directory. Used to launch the server when in production.
 - `start:dev` - Launches the `index.js` file within the `src/` directory using `nodemon`, allowing it to automatically restart when any changes are detected. **NOTE:** The server must be manually restarted before it will detect newly created environment variables.
 - `test` - Test the server using `jest`.
-- `test:dev` - Run the server in watch mode, causing it to rerun tests when changes are detected.
+- `test:dev` - Run the tests in watch mode, causing it to rerun tests when changes are detected.
 - `build` - Build the program (goes into the 'build' folder).
 - `update-common` - Install the latest version of the `pn-leave-tool-common` npm package.
 
