@@ -47,9 +47,9 @@ This section describes all the request routes for the PN Leave Tool API. All rou
 
 ### Depots
 
-**File: **`src/routes/Depot.router.js`
+**File:** `src/routes/Depot.router.js`
 
-**Root URL: ** `/depots`
+**Root URL:** `/depots`
 
 | Function           | Address | Request Type | Authentication      | Request Body            |
 | ------------------ | ------- | ------------ | ------------------- | ----------------------- |
@@ -59,9 +59,9 @@ This section describes all the request routes for the PN Leave Tool API. All rou
 
 ### Leave Requests
 
-**File: **`src/routes/Leave.router.js`
+**File:** `src/routes/Leave.router.js`
 
-**Root URL: ** `/leave`
+**Root URL:** `/leave`
 
 | Function                                     | Address  | Request Type | Authentication      | Request Body                   |
 | -------------------------------------------- | -------- | ------------ | ------------------- | ------------------------------ |
@@ -70,9 +70,9 @@ This section describes all the request routes for the PN Leave Tool API. All rou
 
 ### User
 
-**File: **`src/routes/User.router.js`
+**File:** `src/routes/User.router.js`
 
-**Root URL: ** `/users`
+**Root URL:** `/users`
 
 | Function                               | Address                             | Request Type | Authentication | Request Body                      |
 | -------------------------------------- | ----------------------------------- | ------------ | -------------- | --------------------------------- |
@@ -84,11 +84,10 @@ This section describes all the request routes for the PN Leave Tool API. All rou
 | Begin the password change process      | /forgotPassword/:employee_number    | POST         | None           | None                              |
 | Complete the password change process   | /resetPassword/:reset_key***        | POST         | None           | - password                        |
 
-*verification token included is contained in the verification email that is sent after a valid registration request is received
-**Only the 'depot' and 'name' fields from the provided 'User' object will be used when updating user information
+\*verification token included is contained in the verification email that is sent after a valid registration request is received  
+\*\*Only the 'depot' and 'name' fields from the provided 'User' object will be used when updating user information  
 \*\*\*The password reset key is contained in the email that is sent after the request to begin the password change process is received
 
-** **
 
 ## Environment Variables
 
@@ -126,12 +125,12 @@ All environment variables are exported from `src/constants/env.js`. This allows 
 
 This project uses `eslint` and `prettier` to enforce a specific code style. The most notable linting rules that are used are:
 
-- **Quotes: ** Must use double quotes. Exceptions to this rule include uses of backticks for template literals with included variables such as `` `Hello ${name}` ``, and when using single quotes to allow the use of double quotes in a string such as `'I said "Hello" to you'`.
-- **Semicolon: ** Must always use semicolons at the end of lines.
-- **Indentation: ** Must use tabs for indentation.
-- **Quote Props: ** Property keys in objects must always be wrapped in quotes, except when using the shorthand to pass a variable as both the key and property value.
-- **Require JSDoc: ** All functions must include a JSDoc comment to document it. [JSDoc](https://jsdoc.app/) documentation.
-- **Prefer Arrow Functions: ** You must use arrow functions (eg; `const func = (param) => {...};`). The `function` syntax can be used if the `this` keyword is used in the function body eg; `function func(param) {return this.result};`
+- **Quotes:** Must use double quotes. Exceptions to this rule include uses of backticks for template literals with included variables such as `` `Hello ${name}` ``, and when using single quotes to allow the use of double quotes in a string such as `'I said "Hello" to you'`.
+- **Semicolon:** Must always use semicolons at the end of lines.
+- **Indentation:** Must use tabs for indentation.
+- **Quote Props:** Property keys in objects must always be wrapped in quotes, except when using the shorthand to pass a variable as both the key and property value.
+- **Require JSDoc:** All functions must include a JSDoc comment to document it. [JSDoc](https://jsdoc.app/) documentation.
+- **Prefer Arrow Functions:** You must use arrow functions (eg; `const func = (param) => {...};`). The `function` syntax can be used if the `this` keyword is used in the function body eg; `function func(param) {return this.result};`
 
 ## Database
 
@@ -199,17 +198,17 @@ This represents a single day in a roster. It tracks how many drivers are rostere
 
 This section describes the two different methods of authentication used in the server
 
-- **Operator Access Key: ** When roster planners are submitting CSV data from the LMS, they must provide an access key.
-- **Login: **This method of authentication requires a JWT authentication token be provided by the client. The required token is provided by the server upon successful login.
+- **Operator Access Key:** When roster planners are submitting CSV data from the LMS, they must provide an access key.
+- **Login:** This method of authentication requires a JWT authentication token be provided by the client. The required token is provided by the server upon successful login.
 
 ## Adjustments
 
 This section will detail how to make adjustments to certain parameters within the application:
 
-- **Set Email Validation: **To enable/disable validation that enforces all user email addresses be official PN email accounts, you must set the `VALIDATE_EMAIL` to either `true` for `false` depending on whether or not you want email addresses .
+- **Set Email Validation** To enable/disable validation that enforces all user email addresses be official PN email accounts, you must set the `VALIDATE_EMAIL` to either `true` for `false` depending on whether or not you want email addresses .
 - **Hosting:** Deploying this project will not require many special steps and will largely be the same as deploying any other project to a hosting provider. However, when doing so make sure to update the `BACKEND_URL` AND `FRONTEND_URL` environment variables when you do so, along with the `REACT_APP_BACKEND_URL` in the frontend application.
-- **Operator Access Key: ** To change the operator access key that must be provided by roster planners when uploading CSV data pulled from the LMS, change the `OPERATOR_ACCESS_KEY` environment variable.
-- **Leave Parameters: **To adjust the minimum/maximum length of annual leave or the minimum required notice a driver must provide before taking leave, you must first clone the [repository containing the common components](https://github.com/TClark1011/pn-leave-tool-common) and navigate to the `src/leaveParams.js` file and make your changes. Save your changes and push them to the main branch. Run `npm version patch` in the command line, then run `npm publish`. Then, execute the the command `npm run update-common` in the frontend and backend codebases.
+- **Operator Access Key** To change the operator access key that must be provided by roster planners when uploading CSV data pulled from the LMS, change the `OPERATOR_ACCESS_KEY` environment variable.
+- **Leave Parameters** To adjust the minimum/maximum length of annual leave or the minimum required notice a driver must provide before taking leave, you must first clone the [repository containing the common components](https://github.com/TClark1011/pn-leave-tool-common) and navigate to the `src/leaveParams.js` file and make your changes. Save your changes and push them to the main branch. Run `npm version patch` in the command line, then run `npm publish`. Then, execute the the command `npm run update-common` in the frontend and backend codebases.
 
 ## Miscellaneous Functionality
 
